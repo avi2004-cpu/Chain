@@ -1,0 +1,3119 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit -->
+<html lang="en" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths" style=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>
+	State Scholarship Portal
+</title><link rel="shortcut icon" href="./State Scholarship Portal_files/kar_logo.png" type="image/png"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"><meta name="description" content="State Scholarship Portal | Postmatric | Government of Karnataka"><script src="./State Scholarship Portal_files/modernizr"></script>
+<link href="./State Scholarship Portal_files/css" rel="stylesheet">
+<link href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/favicon.ico" rel="shortcut icon" type="image/x-icon"><link href="./State Scholarship Portal_files/bootstrap.min.css" rel="stylesheet"><link href="./State Scholarship Portal_files/bootstrap-icons.css" rel="stylesheet" type="text/css"><link href="./State Scholarship Portal_files/all.css" rel="stylesheet" type="text/css"><link href="./State Scholarship Portal_files/datatables.css" rel="stylesheet"><link href="./State Scholarship Portal_files/datatables.min.css" rel="stylesheet">
+
+    <script src="./State Scholarship Portal_files/jquery-3.7.1.min.js.download"></script>
+    <script src="./State Scholarship Portal_files/bootstrap.bundle.min.js.download"></script>
+
+    <link href="./State Scholarship Portal_files/popup.css" rel="stylesheet">
+    <!-- 2. Select2 CSS -->
+    <link href="./State Scholarship Portal_files/select2.min.css" rel="stylesheet">
+    <!-- 3. Select2 JS -->
+    <script src="./State Scholarship Portal_files/select2.min.js.download"></script>
+    <link href="./State Scholarship Portal_files/DropDownListSearch.css" rel="stylesheet">
+        <style>
+            /* ═══════════════════════════════════════════════════════════ */
+            /* ROOT & RESET                                                */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html, body {
+                height: 100%;
+                background: linear-gradient(135deg, #eef3f8 0%, #f8fafc 50%, #eef2ff 100%);
+                font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+                color: #1e293b;
+            }
+
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .container {
+                max-width: none !important;
+            }
+
+            input, select, textarea {
+                max-width: none !important;
+            }
+
+            /* ═══════════════════════════════════════════════════════════ */
+            /* HEADER & BRAND SECTION                                      */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            .ssp-shell {
+                flex-shrink: 0;
+                background: #ffffff;
+                border-bottom: 1px solid rgba(30, 41, 59, 0.08);
+                box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            }
+
+            .top-shell {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+                border-bottom: 1px solid rgba(30, 41, 59, 0.06);
+            }
+
+            .top-inner {
+                padding: 18px 30px;
+            }
+
+            .brand-wrap {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .brand-logo {
+                width: 65px;
+                height: 65px;
+                display: flex;
+                flex-shrink: 0;
+            }
+
+                .brand-logo img {
+                    width: 50px;
+                    height: 50px;
+                }
+
+            .brand-title {
+                font-size: 1.2rem;
+                font-weight: 800;
+                color: #1e293b;
+                letter-spacing: 0.3px;
+                line-height: 1.1;
+            }
+
+            .brand-sub {
+                font-size: 0.8rem;
+                color: #64748b;
+                font-weight: 500;
+                margin-top: 3px;
+            }
+
+            .info-row {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                gap: 12px;
+                align-items: center;
+            }
+
+            .info-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 14px;
+                background: linear-gradient(135deg, rgba(11, 77, 140, 0.08), rgba(30, 41, 59, 0.06));
+                border: 1px solid rgba(11, 77, 140, 0.1);
+                border-radius: 18px;
+                color: #1e293b;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+
+            .info-label {
+                color: #64748b;
+                font-weight: 600;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.4px;
+            }
+
+            .info-value {
+                color: #0b4d8c;
+                font-weight: 700;
+                font-size: 0.95rem;
+            }
+
+            .logout-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 16px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, #dc2626, #b91c1c);
+                color: #fff !important;
+                text-decoration: none !important;
+                font-weight: 700;
+                font-size: 0.9rem;
+                box-shadow: 0 6px 16px rgba(220, 38, 38, 0.18);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+                .logout-link:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 20px rgba(220, 38, 38, 0.25);
+                    color: #fff;
+                }
+
+                .logout-link i {
+                    font-size: 0.95rem;
+                }
+
+            /* ═══════════════════════════════════════════════════════════ */
+            /* NAVBAR STYLES                                               */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            .navbar-box {
+                width: 100%;
+                padding: 0;
+            }
+
+
+            /* ================= NAVBAR - MINIMAL UNDERLINE STYLE ================= */
+
+            .navbar {
+                padding: 10px 20px;
+                background: #1e293b;
+                border-radius: 12px;
+                margin-top: 10px;
+                box-shadow: 0 6px 18px rgba(15, 23, 42, 0.15);
+                border-bottom: 3px solid #f0a932;
+            }
+
+            /* menu layout */
+            .navbar-nav {
+                gap: 18px;
+                align-items: center;
+            }
+
+            .navbar-toggler {
+                background-color: white;
+            }
+            /* nav items */
+            .navbar-nav .nav-item {
+                position: relative;
+                color: white;
+                text-decoration: none;
+            }
+
+            .nav-item:hover {
+                background-color: white;
+                color: black;
+            }
+
+            /* links */
+            .navbar-nav .nav-link {
+                color: #cbd5e1 !important;
+                font-weight: 600;
+                padding: 6px 4px;
+                position: relative;
+                transition: color 0.3s ease;
+            }
+
+                /* underline effect */
+                .navbar-nav .nav-link::after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    bottom: -4px;
+                    width: 0%;
+                    height: 2px;
+                    background: #38bdf8; /* accent color */
+                    transition: width 0.3s ease;
+                }
+
+                /* hover */
+                .navbar-nav .nav-link:hover {
+                    color: #ffffff !important;
+                }
+
+                    .navbar-nav .nav-link:hover::after {
+                        width: 100%;
+                    }
+
+            /* active */
+            .navbar-nav .active > a {
+                color: #ffffff !important;
+            }
+
+                .navbar-nav .active > a::after {
+                    width: 100%;
+                }
+
+            /* ================= DROPDOWN ================= */
+
+            .navbar-nav .dropdown-menu {
+                background: #ffffff;
+                border-radius: 10px;
+                border: none;
+                padding: 6px 0;
+                margin-top: 10px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                display: none;
+            }
+
+            /* show dropdown (asp menu fix) */
+            .navbar-nav li:hover > ul {
+                display: block;
+            }
+
+            /* dropdown items */
+            .navbar-nav .dropdown-item {
+                padding: 8px 16px;
+                color: #1e293b;
+                font-weight: 500;
+            }
+
+                /* dropdown hover */
+                .navbar-nav .dropdown-item:hover {
+                    background: #f1f5f9;
+                    color: #0d6efd;
+                }
+
+
+            /* ═══════════════════════════════════════════════════════════ */
+            /* RESPONSIVE - NAVBAR                                         */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            @media (max-width: 991px) {
+                .navbar-wrapper {
+                    padding: 10px 20px;
+                }
+
+                .static {
+                    margin-bottom: 0.5rem;
+                }
+
+                .navbar-nav {
+                    align-items: start;
+                }
+
+                .navbar {
+                    padding: 10px 16px;
+                    border-radius: 12px;
+                    border-bottom: 3px solid #f0a932;
+                }
+
+                .navbar-nav {
+                    gap: 0;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .navbar-wrapper {
+                    padding: 8px 0;
+                    background: #ffffff;
+                }
+
+                .navbar {
+                    border-radius: 12px;
+                    padding: 10px 16px;
+                    margin: 0;
+                    border-bottom: 3px solid #f0a932;
+                }
+
+                .nav-link {
+                    padding: 10px 16px !important;
+                }
+
+                .navbar-nav {
+                    gap: 0;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .navbar-wrapper {
+                    padding: 6px 0;
+                }
+
+                .navbar {
+                    border-radius: 12px;
+                    padding: 8px 12px;
+                    border-bottom: 3px solid #f0a932;
+                }
+
+                .nav-link {
+                    padding: 8px 12px !important;
+                    font-size: 0.85rem;
+                }
+            }
+
+            /* ═══════════════════════════════════════════════════════════ */
+            /* BODY CONTENT                                                */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            .body-content {
+                flex: 1;
+                padding: 30px;
+                margin-top: 0;
+                overflow-y: auto;
+            }
+
+            .container {
+                max-width: 1200px;
+            }
+
+            /* ═══════════════════════════════════════════════════════════ */
+            /* FOOTER                                                      */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            .ssp-footer {
+                background: #1e293b;
+                color: #cbd5e1;
+                font-size: 0.85rem;
+                margin-top: auto;
+                flex-shrink: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .footer-title {
+                color: #ffffff;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                font-size: 1rem;
+            }
+
+            .footer-text {
+                line-height: 1.6;
+                color: #cbd5e1;
+                font-size: 0.9rem;
+            }
+
+            .footer-links {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                .footer-links li {
+                    margin-bottom: 0.6rem;
+                }
+
+                .footer-links a {
+                    color: #cbd5e1;
+                    text-decoration: none;
+                    transition: color 0.2s ease;
+                    font-size: 0.9rem;
+                }
+
+                    .footer-links a:hover {
+                        color: #ffffff;
+                    }
+
+            .footer-bottom {
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 16px 0;
+                font-size: 0.8rem;
+                color: #94a3b8;
+            }
+
+            .footer-bottom-links a {
+                color: #94a3b8;
+                text-decoration: none;
+                margin: 0 12px;
+                transition: color 0.2s ease;
+            }
+
+                .footer-bottom-links a:hover {
+                    color: #ffffff;
+                }
+
+            /* ═══════════════════════════════════════════════════════════ */
+            /* RESPONSIVE                                                  */
+            /* ═══════════════════════════════════════════════════════════ */
+
+            @media (max-width: 991px) {
+                .top-inner {
+                    padding: 14px 20px;
+                }
+
+                .navbar {
+                    margin: 12px 0;
+                    padding: 10px 16px;
+                    border-radius: 12px;
+                    border-bottom: 3px solid #f0a932;
+                }
+
+                @media (max-width: 767px) {
+                    .navbar {
+                        margin: 10px 0;
+                        border-radius: 12px;
+                        padding: 10px 16px;
+                        border-bottom: 3px solid #f0a932;
+                    }
+                }
+
+                .info-row {
+                    justify-content: flex-start;
+                    flex-direction: column;
+                }
+
+                .info-pill {
+                    width: 100%;
+                    justify-content: space-between;
+                }
+
+                .logout-link {
+                    width: 100%;
+                    justify-content: center;
+                }
+
+                .body-content {
+                    padding: 20px;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .brand-wrap {
+                    gap: 12px;
+                }
+
+                .brand-logo {
+                    width: 48px;
+                    height: 48px;
+                }
+
+                    .brand-logo img {
+                        width: 32px;
+                        height: 32px;
+                    }
+
+                .brand-title {
+                    font-size: 1rem;
+                }
+
+                .brand-sub {
+                    font-size: 0.75rem;
+                }
+
+                .info-pill {
+                    font-size: 0.85rem;
+                    padding: 8px 12px;
+                }
+
+                .navbar {
+                    margin: 10px 0;
+                    border-radius: 12px;
+                    border-bottom: 3px solid #f0a932;
+                }
+
+                .navbar-nav {
+                    gap: 0;
+                }
+
+                .nav-link {
+                    padding: 10px 16px !important;
+                }
+
+                .body-content {
+                    padding: 16px 12px;
+                }
+
+                .ssp-footer {
+                    border-radius: 0;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .top-inner {
+                    padding: 12px 16px;
+                }
+
+                .brand-title {
+                    font-size: 0.95rem;
+                }
+
+                .info-row {
+                    gap: 8px;
+                }
+
+                .body-content {
+                    padding: 12px;
+                }
+            }
+
+
+
+
+            /* PRELOADER */
+            .ssp-preloader {
+                position: fixed;
+                inset: 0;
+                z-index: 10550; /* above bootstrap modals */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,250,255,0.6));
+                backdrop-filter: blur(6px);
+                transition: opacity 360ms ease, visibility 360ms;
+                opacity: 1;
+                visibility: visible;
+            }
+
+                .ssp-preloader[aria-hidden="true"] {
+                    opacity: 0;
+                    visibility: hidden;
+                    pointer-events: none;
+                }
+
+            .ssp-preloader-inner {
+                text-align: center;
+                padding: 24px 28px;
+                border-radius: 14px;
+                box-shadow: 0 8px 30px rgba(16,24,40,0.12);
+                background: linear-gradient(180deg, #ffffff, #f7fbff);
+                min-width: 320px;
+                max-width: 520px;
+            }
+
+            .ssp-preloader-logo {
+                width: 54px;
+                height: 54px;
+                object-fit: contain;
+                display: inline-block;
+                margin-bottom: 10px;
+                transform-origin: center;
+                animation: preloader-bob 1400ms infinite linear;
+            }
+
+            @keyframes preloader-bob {
+                0% {
+                    transform: translateY(0) rotate(0deg);
+                }
+
+                50% {
+                    transform: translateY(-6px) rotate(-4deg);
+                }
+
+                100% {
+                    transform: translateY(0) rotate(0deg);
+                }
+            }
+
+            .ssp-preloader-title {
+                font-weight: 700;
+                margin-bottom: 8px;
+                color: #0f1724;
+            }
+
+            .ssp-preloader-sub {
+                font-size: 0.85rem;
+                color: #475569;
+                margin-top: 10px;
+            }
+
+            /* progress bar */
+            .ssp-preloader-bar {
+                height: 8px;
+                width: 100%;
+                background: linear-gradient(90deg,#e6eefc,#f3fbff);
+                border-radius: 10px;
+                margin: 12px 0 6px;
+                overflow: hidden;
+            }
+
+            .ssp-preloader-progress {
+                height: 100%;
+                width: 30%; /* train length */
+                background: linear-gradient(90deg, #2c67f2, #62cff4);
+                border-radius: 10px;
+                position: relative;
+                animation: train-move 1.4s linear infinite;
+            }
+
+            /* Train goes left ➜ right forever */
+            @keyframes train-move {
+                0% {
+                    transform: translateX(-120%);
+                }
+
+                100% {
+                    transform: translateX(420%);
+                }
+            }
+
+            /* respect prefers-reduced-motion */
+            @media (prefers-reduced-motion: reduce) {
+                .ssp-preloader-logo {
+                    animation: none;
+                }
+
+                .ssp-preloader-progress {
+                    transition: none;
+                }
+            }
+
+            /* SKELETONS for nav items (use when you want to render placeholders) */
+            .ssp-skeleton {
+                display: inline-block;
+                background: linear-gradient(90deg, rgba(220,230,250,0.8), rgba(245,246,250,0.6), rgba(220,230,250,0.8));
+                background-size: 200% 100%;
+                animation: shimmer 1.3s linear infinite;
+                border-radius: 8px;
+                height: 1.05rem;
+                width: 8rem;
+            }
+
+            @keyframes shimmer {
+                0% {
+                    background-position: 200% 0;
+                }
+
+                100% {
+                    background-position: -200% 0;
+                }
+            }
+
+            /* subtle focus for accessibility & micro-interaction */
+
+
+            @media (max-width: 768px) {
+                .container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+            }
+            /* ── Chang Date Picker ───────────────────────────────────────── */
+
+            .cdp-wrapper {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                margin-top: 12px;
+            }
+
+            /* ── fake input ── */
+            .cdp-input {
+                width: 100%;
+                padding: 0.5rem 2.5rem 0.5rem 0.85rem;
+                border: 1.5px solid #4f7ef8;
+                border-radius: 0.5rem;
+                font-size: 0.9rem;
+                color: #212529;
+                background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+                cursor: pointer;
+                transition: border-color 0.2s, box-shadow 0.2s;
+                box-sizing: border-box;
+                outline: none;
+                user-select: none;
+            }
+
+                .cdp-input::placeholder {
+                    color: #adb5bd;
+                }
+
+                .cdp-input:focus {
+                    box-shadow: 0 0 0 3px rgba(79,126,248,0.15);
+                }
+
+                .cdp-input.is-valid {
+                    border-color: #28a745;
+                    box-shadow: 0 0 0 3px rgba(40,167,69,0.1);
+                }
+
+                .cdp-input.is-invalid {
+                    border-color: #dc3545 !important;
+                    box-shadow: 0 0 0 3px rgba(220,53,69,0.12) !important;
+                }
+
+            /* ── badge chip on border ── */
+            .cdp-badge {
+                position: absolute;
+                top: -10px;
+                right: 12px;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.7px;
+                text-transform: uppercase;
+                padding: 1px 8px;
+                border-radius: 20px;
+                background: #fff;
+                border: 1.5px solid #4f7ef8;
+                color: #4f7ef8;
+                line-height: 1.7;
+                pointer-events: none;
+                white-space: nowrap;
+                z-index: 1;
+            }
+
+                .cdp-badge.past-badge {
+                    border-color: #28a745;
+                    color: #28a745;
+                }
+
+            /* ── hint ── */
+            .cdp-hint {
+                font-size: 11px;
+                color: #6c757d;
+                margin-top: 4px;
+                min-height: 16px;
+            }
+
+                .cdp-hint.error {
+                    color: #dc3545;
+                }
+
+            /* ── popup ── */
+            .cdp-popup {
+                display: none;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                z-index: 1055;
+                width: 310px;
+                background: #fff;
+                border-radius: 1rem;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(0,0,0,0.07);
+                padding: 16px 14px 12px;
+                box-sizing: border-box;
+                animation: cdp-in 0.14s ease;
+            }
+
+                .cdp-popup.open {
+                    display: block;
+                }
+
+            @keyframes cdp-in {
+                from {
+                    opacity: 0;
+                    transform: translateY(5px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* ── header ── */
+            .cdp-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                padding: 0 2px;
+            }
+
+            .cdp-month-year-btn {
+                background: none;
+                border: none;
+                font-size: 15px;
+                font-weight: 700;
+                color: #212529;
+                cursor: pointer;
+                padding: 3px 6px;
+                border-radius: 6px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+                .cdp-month-year-btn:hover {
+                    background: #f1f3f5;
+                }
+
+                .cdp-month-year-btn .cdp-caret {
+                    font-size: 9px;
+                    color: #4f7ef8;
+                }
+
+            .cdp-nav-group {
+                display: flex;
+                gap: 4px;
+            }
+
+            .cdp-nav {
+                width: 28px;
+                height: 28px;
+                border-radius: 6px;
+                border: 1px solid #e9ecef;
+                background: #fff;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                color: #6c757d;
+                transition: background 0.12s;
+            }
+
+                .cdp-nav:hover {
+                    background: #f1f3f5;
+                    color: #212529;
+                }
+
+            /* ── overlay (month + year picker) ── */
+            .cdp-picker-overlay {
+                display: none;
+                position: absolute;
+                inset: 0;
+                background: #fff;
+                border-radius: 1rem;
+                padding: 14px;
+                z-index: 3;
+                box-sizing: border-box;
+                animation: cdp-in 0.12s ease;
+                overflow: hidden;
+            }
+
+                .cdp-picker-overlay.open {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+            .cdp-picker-back {
+                background: none;
+                border: none;
+                font-size: 12px;
+                color: #4f7ef8;
+                font-weight: 700;
+                cursor: pointer;
+                padding: 0 0 8px;
+                text-align: left;
+            }
+
+                .cdp-picker-back:hover {
+                    text-decoration: underline;
+                }
+
+            .cdp-picker-title {
+                font-size: 11px;
+                font-weight: 700;
+                color: #adb5bd;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                margin: 0 0 6px;
+            }
+
+            /* month grid — fixed, no scroll */
+            .cdp-picker-grid-month {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
+                margin-bottom: 10px;
+                flex-shrink: 0;
+            }
+
+            /* year list — scrollable */
+            .cdp-year-scroll {
+                flex: 1;
+                overflow-y: auto;
+                max-height: 140px;
+                border: 1px solid #f1f3f5;
+                border-radius: 8px;
+                padding: 4px;
+                scrollbar-width: thin;
+                scrollbar-color: #dee2e6 transparent;
+            }
+
+                .cdp-year-scroll::-webkit-scrollbar {
+                    width: 4px;
+                }
+
+                .cdp-year-scroll::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                .cdp-year-scroll::-webkit-scrollbar-thumb {
+                    background: #dee2e6;
+                    border-radius: 4px;
+                }
+
+            .cdp-picker-grid-year {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+
+            .cdp-picker-item {
+                padding: 6px 4px;
+                border-radius: 8px;
+                font-size: 13px;
+                cursor: pointer;
+                border: none;
+                background: none;
+                color: #343a40;
+                font-weight: 500;
+                text-align: center;
+                transition: background 0.1s;
+            }
+
+                .cdp-picker-item:hover {
+                    background: #e8effe;
+                    color: #4f7ef8;
+                }
+
+                .cdp-picker-item.active {
+                    background: #4f7ef8;
+                    color: #fff;
+                }
+
+            /* ── day names ── */
+            .cdp-day-names {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                margin-bottom: 4px;
+            }
+
+            .cdp-day-name {
+                text-align: center;
+                font-size: 12px;
+                font-weight: 600;
+                color: #adb5bd;
+                padding: 2px 0 6px;
+            }
+
+            /* ── days grid ── */
+            .cdp-days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
+            }
+
+            /* every day cell has border + glass look */
+            .cdp-day {
+                position: relative;
+                aspect-ratio: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                font-weight: 500;
+                color: #343a40;
+                cursor: pointer;
+                border: 1px solid rgba(0,0,0,0.07);
+                background: rgba(255,255,255,0.7);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                padding: 0;
+                border-radius: 6px;
+                transition: background 0.1s, border-color 0.1s, color 0.1s;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+
+                /* hover on available days */
+                .cdp-day:hover:not(.cdp-disabled):not(.cdp-selected):not(.cdp-today) {
+                    background: rgba(79,126,248,0.1);
+                    border-color: #4f7ef8;
+                    color: #4f7ef8;
+                }
+
+                /* other month — faded glass */
+                .cdp-day.cdp-other-month {
+                    color: #ced4da;
+                    background: rgba(248,249,250,0.5);
+                    border-color: rgba(0,0,0,0.04);
+                }
+
+                /* TODAY = blue square (solid fill, white text) */
+                .cdp-day.cdp-today {
+                    background: #4f7ef8;
+                    border-color: #4f7ef8;
+                    color: #fff;
+                    border-radius: 6px;
+                    font-weight: 700;
+                }
+
+                /* SELECTED = blue circle (solid fill, white text) */
+                .cdp-day.cdp-selected {
+                    background: #4f7ef8;
+                    border-color: #4f7ef8;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-weight: 700;
+                }
+
+                /* today + selected → keep circle */
+                .cdp-day.cdp-today.cdp-selected {
+                    border-radius: 50%;
+                }
+
+                /* ── DISABLED day: red tint glass + red X overlay ── */
+                .cdp-day.cdp-disabled {
+                    background: rgba(220,53,69,0.05);
+                    border-color: rgba(220,53,69,0.2);
+                    color: #dc3545;
+                    cursor: default;
+                    text-decoration: line-through;
+                    text-decoration-color: rgba(220,53,69,0.5);
+                }
+
+                    /* red X pseudo overlay */
+                    .cdp-day.cdp-disabled::before,
+                    .cdp-day.cdp-disabled::after {
+                        content: '';
+                        position: absolute;
+                        width: 65%;
+                        height: 1.2px;
+                        background: rgba(220,53,69,0.35);
+                        top: 50%;
+                        left: 50%;
+                        transform-origin: center;
+                        pointer-events: none;
+                    }
+
+                    .cdp-day.cdp-disabled::before {
+                        transform: translate(-50%,-50%) rotate(45deg);
+                    }
+
+                    .cdp-day.cdp-disabled::after {
+                        transform: translate(-50%,-50%) rotate(-45deg);
+                    }
+
+                /* other-month disabled — even more faded */
+                .cdp-day.cdp-other-month.cdp-disabled {
+                    background: rgba(220,53,69,0.03);
+                    border-color: rgba(220,53,69,0.1);
+                    color: rgba(220,53,69,0.3);
+                }
+
+            /* ── tooltip on disabled ── */
+            .cdp-tip {
+                display: none;
+                position: absolute;
+                bottom: calc(100% + 7px);
+                left: 50%;
+                transform: translateX(-50%);
+                background: #1e293b;
+                color: #fff;
+                font-size: 11px;
+                font-weight: 500;
+                padding: 4px 9px;
+                border-radius: 6px;
+                white-space: nowrap;
+                pointer-events: none;
+                z-index: 200;
+                line-height: 1.5;
+            }
+
+                .cdp-tip::after {
+                    content: '';
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    border: 5px solid transparent;
+                    border-top-color: #1e293b;
+                }
+
+            .cdp-day.cdp-disabled:hover .cdp-tip {
+                display: block;
+            }
+
+            /* ── footer ── */
+            .cdp-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+                padding-top: 10px;
+                border-top: 1px solid #f1f3f5;
+            }
+
+            .cdp-btn {
+                background: none;
+                border: none;
+                font-size: 13px;
+                font-weight: 700;
+                color: #4f7ef8;
+                cursor: pointer;
+                padding: 4px 10px;
+                border-radius: 6px;
+                transition: background 0.1s;
+            }
+
+                .cdp-btn:hover {
+                    background: #e8effe;
+                }
+
+                .cdp-btn.cdp-btn-clear {
+                    color: #adb5bd;
+                }
+
+                    .cdp-btn.cdp-btn-clear:hover {
+                        background: #f8f9fa;
+                        color: #6c757d;
+                    }
+            /* ── Disabled Select Guard ── */
+            .ssp-shell {
+                position: relative;
+                display: inline-block;
+                width: 100%;
+            }
+
+            .ssp-zone {
+                position: absolute;
+                inset: 0;
+                z-index: 3;
+                cursor: not-allowed;
+            }
+
+            .ssp-lock {
+                position: absolute;
+                right: 11px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 14px;
+                pointer-events: none;
+                z-index: 2;
+                transition: transform .2s;
+            }
+
+            .ssp-bubble {
+                position: absolute;
+                bottom: calc(100% + 12px);
+                left: 0;
+                display: flex;
+                align-items: flex-end;
+                gap: 10px;
+                opacity: 0;
+                transform: translateY(10px) scale(.92);
+                pointer-events: none;
+                z-index: 10;
+                white-space: nowrap;
+                transition: opacity .2s ease, transform .28s cubic-bezier(.34,1.4,.64,1);
+            }
+
+                .ssp-bubble.ssp-show {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+
+            .ssp-avatar {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 26px;
+                flex-shrink: 0;
+            }
+
+            .ssp-speech {
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px 10px 10px 2px;
+                padding: 8px 12px;
+                font-size: 12px;
+                line-height: 1.5;
+                position: relative;
+                font-family: inherit;
+                max-width: 210px;
+            }
+
+                .ssp-speech strong {
+                    display: block;
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+
+                .ssp-speech span {
+                    color: #6b7280;
+                    font-size: 11px;
+                }
+
+                .ssp-speech::before {
+                    content: '';
+                    position: absolute;
+                    bottom: -6px;
+                    left: 14px;
+                    width: 10px;
+                    height: 6px;
+                    background: #fff;
+                    clip-path: polygon(0 0, 100% 0, 0 100%);
+                    border-left: 1px solid #e5e7eb;
+                    border-bottom: 1px solid #e5e7eb;
+                }
+
+            .ssp-shell.ssp-hovered select {
+                border-color: #f0959580 !important;
+                opacity: .85;
+            }
+
+            .ssp-shell.ssp-hovered .ssp-lock {
+                transform: translateY(-50%) scale(1.2);
+            }
+
+            @keyframes ssp-shake {
+                0%, 100% {
+                    transform: translateX(0);
+                }
+
+                20% {
+                    transform: translateX(-4px);
+                }
+
+                40% {
+                    transform: translateX(4px);
+                }
+
+                60% {
+                    transform: translateX(-3px);
+                }
+
+                80% {
+                    transform: translateX(3px);
+                }
+            }
+
+            @keyframes ssp-nod {
+                0%, 100% {
+                    transform: rotate(0deg);
+                }
+
+                25% {
+                    transform: rotate(-14deg);
+                }
+
+                50% {
+                    transform: rotate(14deg);
+                }
+
+                75% {
+                    transform: rotate(-8deg);
+                }
+            }
+
+            .ssp-do-shake {
+                animation: ssp-shake .42s ease;
+            }
+
+            .ssp-do-nod {
+                animation: ssp-nod .5s ease;
+            }
+        </style>
+    
+    <style>
+        /* Modal Design */
+        /* Modern Centered Modal */
+        #confirmDialog .modal-dialog {
+            display: flex;
+            align-items: center;
+            min-height: calc(100% - 1rem); /* Standard Bootstrap centering logic */
+            max-width: 850px;
+            margin: auto;
+        }
+
+        /* Blur the background */
+        .modal-backdrop.show {
+            backdrop-filter: blur(8px);
+            background-color: rgba(15, 23, 42, 0.7); /* Deep slate semi-transparent */
+            opacity: 1 !important;
+        }
+
+        /* Modal Content Card */
+        #confirmDialog .modal-content {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        /* Header Styling */
+        #confirmDialog .modal-header {
+            background: #14284e; /* Match your login card theme */
+            padding: 20px 24px;
+            border-bottom: 2px solid #f9e26b; /* Accent gold line */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #confirmDialog .modal-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Custom Close Button */
+        #confirmDialog .btn-close-white {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.2s;
+        }
+
+            #confirmDialog .btn-close-white:hover {
+                color: #f9e26b;
+            }
+
+        /* Body Content */
+        #confirmDialog .modal-body {
+            padding: 32px 24px;
+            text-align: center;
+            font-size: 1rem;
+            color: #334155;
+            background: #ffffff;
+        }
+
+        /* Footer & Button */
+        #confirmDialog .modal-footer {
+            border-top: 1px solid #f1f5f9;
+            padding: 16px 24px;
+            justify-content: center;
+            background: #f8fafc;
+        }
+
+        #confirmDialog .btn-ok {
+            background: #0b4d8c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 40px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+            #confirmDialog .btn-ok:hover {
+                background: #14284e;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(11, 77, 140, 0.3);
+            }
+
+
+        /*error banner*/
+        .error-banner {
+            background-color: #fef2f2;
+            border: 1px solid #fee2e2;
+            color: #991b1b;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            animation: slideDown 0.3s ease-out;
+        }
+
+            .error-banner i {
+                font-size: 1.1rem;
+                color: #ef4444;
+            }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /*error banner end*/
+    </style>
+
+
+    <script type="text/javascript">
+        window.history.forward(1);
+        function noBack() { window.history.forward(1); }
+        document.onkeydown = function (e) {
+            if (event.keyCode == 123) return false;
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) return false;
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) return false;
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        }
+        var message = "Sorry, Right Click have been disabled.";
+        function click(e) {
+            if (document.all) {
+                if (event.button == 2 || event.button == 3) { alert(message); return false; }
+            } else {
+                if (e.button == 2 || e.button == 3) { e.preventDefault(); e.stopPropagation(); alert(message); return false; }
+            }
+        }
+        if (document.all) { document.onmousedown = click; } else { document.onclick = click; }
+        function disableselect(e) { return false; }
+        function reEnable() { return true; }
+        document.onselectstart = new Function("return false");
+        if (window.sidebar) { document.onmousedown = disableselect; document.onclick = reEnable; }
+        function clickIE() { if (document.all) { return false; } }
+        function clickNS(e) { if (document.layers || (document.getElementById && !document.all)) { if (e.which == 2 || e.which == 3) return false; } }
+        if (document.layers) { document.captureEvents(Event.MOUSEDOWN); document.onmousedown = clickNS; } else { document.onmouseup = clickNS; document.oncontextmenu = clickIE; }
+        document.oncontextmenu = new Function("return false");
+        function disableCtrlKeyCombination(e) {
+            var forbiddenKeys = new Array('a', 'n', 'c', 'i', 'x', 'j', 'w', 'U', 'u');
+            var key; var isCtrl;
+            if (window.event) { key = window.event.keyCode; isCtrl = window.event.ctrlKey; }
+            else { key = e.which; isCtrl = e.ctrlKey; }
+            if (isCtrl) {
+                for (var i = 0; i < forbiddenKeys.length; i++) {
+                    if (forbiddenKeys[i].toLowerCase() == String.fromCharCode(key).toLowerCase()) { return false; }
+                }
+            } return true;
+        }
+        var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+        if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
+        function mischandler() { return false; }
+        function mousehandler(e) {
+            var myevent = (isNS) ? e : event; var eventbutton = (isNS) ? myevent.which : myevent.button;
+            if ((eventbutton == 2) || (eventbutton == 3)) return false;
+        }
+        document.oncontextmenu = mischandler;
+        document.onmousedown = mousehandler;
+        document.onmouseup = mousehandler;
+    </script>
+
+    <noscript>
+        <style type="text/css">
+            .hidden {
+                display: none;
+            }
+        </style>
+        <div class="alert alert-danger m-0 text-center fw-bold rounded-0">
+            You don't have javascript enabled. Please Enable Javascript and Continue to use Application.
+   
+        </div>
+    </noscript>
+    <script type="text/javascript">
+        (function () {
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, "", window.location.href);
+            };
+        })();
+
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+
+        function isNumberKey(evt) {
+            var charCode = evt.which ? evt.which : evt.keyCode;
+            if (charCode < 48 || charCode > 57) { return false; }
+            return true;
+        }
+    </script>
+
+    <script type="text/javascript">
+        // ── Disable autocomplete on all inputs ──────────────────────────────
+        $(document).ready(function () {
+            $(":input").attr("autocomplete", "off");
+        });
+
+        // ── Prevent accidental browser Back key ─────────────────────────
+        $(document).on("keydown", function (e) {
+            if (e.which === 8 && !$(e.target).is("input, textarea")) { e.preventDefault(); }
+        });
+
+        function blockSpecialChar(e) {
+            var k = e.keyCode;
+            return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || (k >= 48 && k <= 57));
+        }
+
+        function restrictInput(event) {
+            var input = event.target;
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+    </script>
+</head>
+<body>
+    <form name="form1" method="post" action="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" autocomplete="off">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" autocomplete="off">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/clE+rffqdPsVjlA9mE/XeNUntDNmyTXjN8Y1pykD4JuBuWg0QDs1X3V0c0AziSZdqM0QXF/X2/0werNoBDIukw3oqcXBq0UWlQuRZFnYiFZbZRpA5lJYbwoXj3Vf7z7FirL7tYtyV4kNSJWY22y4PxJcZ1f7wvHkZfW3XZO9bpNq7FuCggCSyblAJL8Fng1v9jLXYe5daY4DGjKa3TCu7aII8kcZe6aTgCvRAnSXmDlOpuUL8ZrbBH85T6pfvUNNQeDq6nuyvv9z7BvgkeEJIABuj8vOjv/zxTA2Q1qTEa+tBnW/Oq5afEWQ4/5IGQdVdjzc+XriYnmLyUHbcV7L5IbozL/RMZ7aaTtmEjNC7tQY/+TwCzTUNjV7edS+fqWWb4na5Wll3pi/xnQkdLPigs/bYp10vrCViu9JMKrJuoGLvEUM/Ik/pQ1lk01zmtPjMAZnJd96HB7akw/r5PI6D/y4ceQJmPkeuTtRhTdzQrbZjXTorEVQQT+0MtXW48iOBe5STxln0ZeWSIjWtY+GVfT/KGP0OqnsPIS08cu4IQ/qJhRUJjE3oY3XeWLhiPDwwDwzZgeTpcKhM+nJA1/FjKkgep/49Y8FJwhV24vOUGDDXVTEVrrgjjqM2q06mJ+HrhfkXVxEDlbbeD44Wl369dMSF3/6u7EqsF+PyvwCTiHyR9X5vmIffvqfJrJzaP/6xbUbNfk3tpdb/bckfpfWP+a2DN61QotbSmDpfXecNCiVnZqdayp9Ts5eB7JP8wTeSbVzZi0OKofTQs23xLg8vo/KPMMAD0ZIgLsfjaz/oejLscXdkPTjIDdF2DLa5Iwri06LLPr7E5GlSXV2EBFAfjWVwdA592mt98z5pVTjtUTy/JYWR37iK5ld4qNhyczF3iM8AwfHSHsf1UB9knIKTuTnOW0d5lgxeenI6o2Aulk/T5oye65qL4WcI5varEkKS26bJCNOToM1nxVrZbFXPZSIx6fIp8j8LS3ZUiuUZmfIH/7a0jjxkPbNbPPX4DqLXTFUue4N0m9b7mTRWwH+NDdUK2gnpHkk4VOWScsg0dO3QkHPum6YKbUC4a+2DQsCpibB5zPJUSiTF0SJP3uEZO+o4cUvXd//12Cu1M0k+1eTtrJtkjLx3fzPI4IX8Zb66RrXTFQZfi9yyY62VfdoD5xF5rYLeP2Bxo16RuvS+jiiPIDa2F8bNlqIGHg4OlB+5mhx48U9yrK5Tg9GU2FbhUtFoXkireUZhEH/nyQbKye5WpNME5hxG7Ljs2HdMJNcqhSjOMhXtPGReipu9EzlymdnyTWSWgkaafo7Jx3G0s2jaLwq/MiNAeDe38/+Ya7IGWHDsVkhx5eMRes0FnIV/nOFdOXR4rIg7gWlGgS/yplu0+rqrj92naXLYGnCmLECdcKlMdQSwSfJDjjKmvQsvdMNwXldOwmfGbRrA3pi06UdyseEOK4QIAVOHePvG0bROVcXttY5hvtE06Ik4GyK2l4wRk+TZdCKI4X7Qr0fPz49/jLKJdro1/Z3d/yl3QBbXBnGoT1RD9tIlZEjrbvIpp9n3cgRv5Y8P8H2wWd4ruWVmowusG4cMmvbbv3HJ/OWkkk3iJftJmebSYbY9Kcq9JvMNDBcTGhyUAP4iJ3aiRqTPnAoP1WjQhajn6RjbxvwxYJkYFc1vhty+RkhBAqRA80cG6hCcBpFxtg4DY1AHEYEJAqWIr58LueZwlPb7GpgMFqqAzx4DA/7mEE7sHIdCxPqVQ6aso8Fto1yFGKRDXPGduGD37ov2z+B4YYbM2pbnBZ0G9cTS3aFy0+dfytNsKJdXt32A1T+F6+SgBg9ZfIXfAId2C9gjyqHflFrV7ItucVjvV+WRh1RM64rIjOwcZOUcmDT6npNFGYEs1M65za/lJkhVYnRTH7SOW8sbmY6C7i+FGxLyTR+0YcDf1U5RnaKkJhhBiCD3z/uBot5Fcy2XJtJZgPJDHLOzGuycwIo6IVeGql1IQiCrqMwxB54Dy+wd6oL3M5YM74wIU//usLdxp+tTiAH0zFMLL65f5gMDAk/tOGzwYmzlq2pVTh4w1Dm92uOk58jVkku5mRAyn7hYQtx2k2i7TGRfYE++ilXJFiwkYKKrDyxVgOssj8/bjFpWlrJK+rtGes86J7EeiSAHTG6KJlOrBTB6jqu8Vqm09XDz1mvJEqgnT19lRQyRETpL6sX/YhNWgVEYw93enMAYpSEbfg5K8npUb9ul4dc6G9UZ9pURUN3WVZlcrLKCs/0lOe//YpDmmRxRUSyRocdxn41XURGEQnY5s+plEP7dUweeSdXokFUmWAn+Vrzl+wMqjw/eET5RRpHycDeMD6jhuKpTxlBD3UewmUxRJQZ9gB6eMoIUO+2fJmrU6/y9Abd5xNLDlCFZ7Z8+0Q+mcq+hCRqnc5usm932l8Dt307fSpC82e19h9wHBCs04V1l1pbXmZQ3KJNxO0kOW6y5epMC9cyJdU6kILB4ZiuawuWFp0xUYWcnSstmqHBez6u1J8fHoC2x0OVLRsU5HOqbUUU5G6Ja4zfiR4MTXW01/nTHhY2O5Q+sPpaLtYSNpe6gCL+v8bbws4FrHKPziKltRFPTJZHmCmFz11jQeBOlhC0WmTqp9il/hmqGDTC1gK2QqL2n/5NEwL9cow20CqvCdaNsrGLx49LaLrFe2m/eKBHOjYo2kMVWXsjfd/Cb1R1EcTxLPGh9FsHn8Y5LosaLSP3eBS0FRj1J15WMDiyPdSukYItRmhgRRXPmrohDKqzLAvZq3VBRU7xbLCvXU44sSrht3TUFk1a76LahXd2eA5sAls1ofuqrc1TzQ6c4RU/ydycm7kq+r7wsnbzmXCC8GWYJBiXavSnhxtWAKHees9wVR9gPZ0mhHyMkBaw982nYB6jNrIn849Fff4J/TqYxoUhybHP0Vmr0X9pHR+bwZhIKMfWJYlosD4NEbG0i1jmUN19TlMOaERzOYtE0+2RiTnESISVyX6kN6U7oeMlMqSASkcQuwZzoolm8UNHUI5VP6uGd2SARaP1JwyXtwKVoSrBt6Ns/59UwZh1Gh6zhv1Lqh5rrCMqGkG2WPBh3ozeQGrk/Jiec+nGt4I1KDtoUyjvnfmp0UwxOMB+4u6ArlVp9o8m6B+FTiwuBl8DYP6eAZ32Bwp4SvA2fuUZKWWY/1/7bSOmXIuqgtqorZS+EXVtye6e/hZdOiKc+4QGcnqyRKFwmmvJEvB5jNVVE6oeV2MtiMw35ejRfblcuvVqz4/P+FiyBg1/1zeXE+AMj2Zj8lFF3IwZE40O74NU30TsETChxrUTxKPvW4FRDJQmU1XVoOuGLbL75ZLAHD0dbxB0cRW0CKTYZK/uy5fQSNxf//hvTTtuorFjWNbVtOQLJILLP7GT0GAU7RSa/Ieqv2wNzD3TiE5l2EBuz74ThV6fEeS0i6cYhrNANoiHWNNJLtMDTjXC8bXDyEgGfPJpU0MiH38MlbRmq+14IPQ6tcde7WhGu3X1jreiA8L5G9fa3S+N5AW+Kd+ZZWaXUmuexVBNBOpk5c7k5G8q0eVkj/uEQOUBfqvznCs14iAhTT+homyIu+K/aK4JbZ1k3HP0m6/aV58hQS9CMiSMAqTU35L9JxQeY+AMl4E7P7QZ+xSqoALAb5uZ8j1XBFAsYjj9Sn0/8h+0qzWdRagX2XQpc37H5pZf+2d8YyPTwBRIq7OVDPbvMUrXHU1twrGWdQL3ubVLeO2QdIkHvc0i1CyzHdWu79BrIbrHSthhlaufaAAIao/qqEYJd4jr59x+2YmuLSYKezWUAX9cYd5LxH2ajOAIr7d+xzh6Lpn0LkHWpEEpLLTE1k+p393Iv3qtRUbfGC0nmWdzuyW6FZ3hJOKalBx+sfH3UZ/Ym4Z0WzibVhlCiyA++FwoRZW0dJ1MthDhAPblnzFKTvlCB7q7O2w/fZrYL6jEEDBeY7235ZcGh97pGzX8rxyEq+a2EL/4JcvzW0dQGeLbXn70PXtMrq7g5fofV55ME+X5MKsot+XvMplx3TKGTC8BvlUrFFuFZGknWr3okhpG3DvD5YH6JiI2BaALpPoPu2infLjYv28tgHHAtEhjwqcx06fTXw1q83VNw6wdzoUva/UURCxhcFC1F/NxarEtObwartxLKfCk9R86eVuuVg+QDlJ+qRk3xUUypNGkamRtFcgXWS9L/9mecjJzgpNDYxA1Gdv22xCmD5qpWyWkyynZMN7eKzpv68Ad7AV60IfHm3aHInEs+40k6r+g8Z31wjku0efdVchAUkZhYtzLfFdtBshrenRSjeE94xSoqpL0nZkl8sInrXYzNkoK7rTuF9/trDwJMC1Lp+1Qf/a69w4+HZ97g7c9Vf6ovNp1GhTnbJyWJM6NMufEnWtkTElyRQdLtysxn0PXCCw2j+BN7CcK1zCBQ6AgoQ87DeypduTX5mc1LiqJS3/csHWHbOvpOfr1opFhORj4h4EGhhO8si4yjawhlFqJkBryEOTUGNQ7woK1rpSCXL2114mFPzvomELZODaOAlNsRneS2xNReXoB6/IqegH4dtx+LpQ/vJV970QOteb8g27Q1Qg8RZevg8XBitC4UmOf89/QWeS" autocomplete="off">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+
+<script src="./State Scholarship Portal_files/MsAjaxJs" type="text/javascript"></script>
+<script src="./State Scholarship Portal_files/jquery-3.7.0.min.js.download" type="text/javascript"></script>
+<script src="./State Scholarship Portal_files/WebForms.js.download" type="text/javascript"></script>
+<script src="./State Scholarship Portal_files/WebUIValidation.js.download" type="text/javascript"></script>
+<script src="./State Scholarship Portal_files/MenuStandards.js.download" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="069A507C" autocomplete="off">
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" autocomplete="off">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="q23ec4wDeoBDkkPqni5egow8tFmcKqCsPEywKS2VuAeBsaxML5/ZZgtFi8yWkqWqvoe3bMheDZc2P1IIZyX/3/w0PFi2BWOF/kB/fQ+SZXXXXD4UitJ7UqtgxIyEGi/VunobjTsh1zyTBRumGZpIV8c8ZKCj5Mbb8ztTvr9IPgJIu2dyJgwuISQ7KCht1Dfbl5QOTfvpzJFy//wcC4rkylaE0bcFQkJ+ubKeg700tjm4VBTIwZMZ3fgVZVMmZqsmvmSWtdLsUkyAfn3yK6K2NcmxlsVB/wkFNa7uq60V8uc=" autocomplete="off">
+</div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl20', 'form1', [], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+
+        <!-- HEADER -->
+        <div class="ssp-shell">
+            <div class="top-shell">
+                <div class="top-inner">
+                    <div class="row" style="display: flex; align-items: center; flex-wrap: wrap; gap: 0;">
+                        <!-- BRAND -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="brand-wrap">
+                                <div class="brand-logo">
+                                    <img src="./State Scholarship Portal_files/kar_logo.png" alt="Logo">
+                                </div>
+                                <div>
+                                    <h4 class="brand-title">State Scholarship Portal</h4>
+                                    <div class="brand-sub">Government of Karnataka</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- INFO & LOGOUT -->
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="info-row">
+                                <div class="info-pill">
+                                    <span class="info-label">Student Name</span>
+                                    <span class="info-value">
+                                        <span id="lbl_UserName">S Nazima Parveen</span>
+                                    </span>
+                                </div>
+                                <div class="info-pill">
+                                    <span class="info-label">SSP ID</span>
+                                    <span class="info-value">
+                                        <span id="Label4">25260186051</span>
+                                    </span>
+                                </div>
+                                <a href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Logout.aspx" class="logout-link">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NAVBAR -->
+                    <div class="navbar-box">
+                        <div class="row">
+                            <div id="menuid">
+                                <nav class="navbar navbar-expand-lg">
+                                    <div class="container-fluid">
+
+                                        <!-- Toggle -->
+                                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" autocomplete="off">
+                                            <span class="navbar-toggler-icon"></span>
+                                        </button>
+
+                                        <div id="masterDiv">
+                                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                                                <a href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit#Menu1_SkipLink"><img alt="Skip Navigation Links" src="./State Scholarship Portal_files/WebResource.axd" width="0" height="0" style="border-width:0px;"></a><div staticmenuitemlinkstyle-cssclass="nav-link" id="Menu1" style="float: left;">
+	<ul class="level1 navbar-nav static" tabindex="0" role="menubar" style="position: relative; width: auto; float: left;">
+		<li role="menuitem" class="static" style=""><a class="level1 nav-item p-2 rounded-3 static" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/StudentHome.aspx" tabindex="-1">Home</a></li><li class="has-popup static dropdown" aria-haspopup="Menu1:submenu:3" role="menuitem" style=""><a class="popout level1 nav-item p-2 rounded-3 static dropdown-toggle" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit#" tabindex="-1" data-bs-toggle="dropdown" aria-expanded="false">Application Status</a><ul class="level2 dropdown-menu dynamic" id="Menu1:submenu:3" style="">
+			<li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Student_Acknowledgement.aspx" tabindex="-1">Acknowledgement</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/DownloadFreeshipCardSSRS.aspx" tabindex="-1">Get Freeship Card</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Check_Student_Scholarship_Status_AllYears.aspx" tabindex="-1">Student Status</a></li>
+		</ul></li><li class="has-popup static dropdown" aria-haspopup="Menu1:submenu:8" role="menuitem" style=""><a class="popout level1 nav-item p-2 rounded-3 static dropdown-toggle" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit#" tabindex="-1" data-bs-toggle="dropdown" aria-expanded="false">Upload / View e-Attestation Documents</a><ul class="level2 dropdown-menu dynamic" id="Menu1:submenu:8" style="">
+			<li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Parent_Salary_Certificate_Details.aspx" tabindex="-1">Parent’s Salary Certificate</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Defence_Service_Certificate_Details.aspx" tabindex="-1">Defence Service Certificate</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Stipend_Non_Practicing_certificate_Details.aspx" tabindex="-1">Stipend and Non-Practicing Certificate</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Bonafide_Certificate_Details.aspx" tabindex="-1">Admission/ Bonafide Certificate</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Previous_Year_Marks_Certificate_details.aspx" tabindex="-1">Previous Year Marks sheet/ Promotion Certificate</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Previous_Qulaifying_Course_marks_card_details.aspx" tabindex="-1">Previous Year Qualifying Course Marks Card (Other State )</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_SSLC_Marks_Card_Details.aspx" tabindex="-1">SSLC Marks Card</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_PUC_Marks_Card_Details.aspx" tabindex="-1">PUC Marks Card</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_Admission_Bonafide_Certificate_CBSE_ICSE.aspx" tabindex="-1">Admission Certificate/Bonafide Certificate for CBSE/ICSE</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/eatt_NIOS_Marks_Card_Details.aspx" tabindex="-1">NIOS 10th Marks Card</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/ViewAttestationDoc.aspx" tabindex="-1">Uploaded e-Attestation Documents</a></li>
+		</ul></li><li role="menuitem" class="static" style=""><a class="level1 nav-item p-2 rounded-3 static" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/AddStudentNSPOTR.aspx" tabindex="-1">Add NSP OTR</a></li><li class="has-popup static dropdown" aria-haspopup="Menu1:submenu:22" role="menuitem" style=""><a class="popout level1 nav-item p-2 rounded-3 static dropdown-toggle" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit#" tabindex="-1" data-bs-toggle="dropdown" aria-expanded="false">Verification</a><ul class="level2 dropdown-menu dynamic" id="Menu1:submenu:22" style="">
+			<li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Student_Application_ekyc.aspx" tabindex="-1">e-KYC</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Student_Check_NPCI.aspx" tabindex="-1">NPCI</a></li>
+		</ul></li><li role="menuitem" class="static" style=""><a class="level1 nav-item p-2 rounded-3 static" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Update_Counselling_Data_By_Student_Id.aspx" tabindex="-1">Update Student Counselling Data</a></li><li class="has-popup static dropdown" aria-haspopup="Menu1:submenu:27" role="menuitem" style=""><a class="popout level1 nav-item p-2 rounded-3 static dropdown-toggle" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Step_Final_Submit#" onclick="__doPostBack(&#39;ctl00$Menu1&#39;,&#39;3&#39;)" tabindex="-1" data-bs-toggle="dropdown" aria-expanded="false">Profile</a><ul class="level2 dropdown-menu dynamic" id="Menu1:submenu:27" style="display: none;">
+			<li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Student_ChangePassword.aspx" tabindex="-1">Change Password</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Student_Update_MobileNo.aspx" tabindex="-1">Update Mobile Number</a></li><li role="menuitem" class="dynamic" style=""><a class="level2 dropdown-item dynamic" href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/Updated_Aadhaaar_Name.aspx" tabindex="-1">Change Aadhaar Name</a></li>
+		</ul></li>
+	</ul>
+</div><div style="clear: left;"></div><a id="Menu1_SkipLink"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BODY CONTENT -->
+        <div class="body-content">
+            
+
+
+            <div id="confirmDialog" class="modal fade" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl modal-dialog-centered">
+                    <!-- Added Bootstrap centering class -->
+                    <div class="modal-content">
+                        <div id="modalheader" class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="fas fa-info-circle me-2" style="color: #f9e26b;"></i>
+                                State Scholarship Portal
+                            </h5>
+                            <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Close" autocomplete="off">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div id="modalbody" class="modal-body">
+                            <!-- Text injected via codebehind -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btnOk" class="btn btn-ok" data-bs-dismiss="modal" autocomplete="off">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+    <link href="./State Scholarship Portal_files/style.css" rel="stylesheet">
+    <link href="./State Scholarship Portal_files/Instructions.css" rel="stylesheet">
+    <link href="./State Scholarship Portal_files/Page.css" rel="stylesheet">
+    <script type="text/javascript">
+        function Confirm() {
+            //$('#confirmDialog').modal('show');
+            var myModal = new bootstrap.Modal(document.getElementById('confirmDialog'), { keyboard: false });
+            myModal.show();
+            return true;
+        }
+    </script>
+    <style type="text/css">
+        /* Theme Colors */
+        :root {
+            --navy-dark: #152036;
+            --navy-light: #1f2e4b;
+            --gold-accent: #c0923a;
+            --bg-light: #f8f9fa;
+        }
+
+        /* Container & Card Styling */
+        .ack-container {
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .ack-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(21, 32, 54, 0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 30px;
+            margin: 0 auto;
+            max-width: 78rem;
+        }
+
+        /* Custom Table Styling */
+        .custom-ack-table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e0e5ec;
+        }
+
+            .custom-ack-table td {
+                padding: 12px 20px;
+                vertical-align: middle;
+                border-bottom: 1px solid #e0e5ec;
+                font-size: 0.95rem;
+            }
+
+            /* Zebra Striping & Label Highlights */
+            .custom-ack-table tr:nth-child(even) {
+                background-color: #fafbfc;
+            }
+
+            .custom-ack-table td[colspan="2"]:first-child {
+                font-weight: 700;
+                color: var(--navy-dark);
+                width: 40%;
+                background-color: rgba(21, 32, 54, 0.03);
+                border-right: 1px solid #e0e5ec;
+            }
+
+            .custom-ack-table td[colspan="2"]:last-child {
+                font-weight: 500;
+                color: #4a5568;
+                width: 60%;
+            }
+
+        /* Header Row Styling */
+        .table-header-row td {
+            background: #e8f0ff;
+            color: #0d52bd !important;
+            padding: 20px !important;
+            border-bottom: 4px solid var(--gold-accent) !important;
+            text-align: center;
+        }
+
+        /* Print Header Styling */
+        .print-only-header {
+            display: none;
+        }
+
+        /* ========================================== */
+        /* ROBUST PRINT CSS - Isolates ONLY the Table */
+        /* ========================================== */
+        @media print {
+            /* Hide absolutely everything in the body by default */
+            body * {
+                visibility: hidden;
+            }
+
+            /* Make the print container and all its children visible */
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+
+            /* Force the print area to the top-left of the page */
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Hide specific non-print elements inside the print area if needed */
+            .no-print {
+                display: none !important;
+            }
+
+            /* Show the hidden Print Header */
+            .print-only-header {
+                display: block;
+                text-align: center;
+                margin-bottom: 25px;
+            }
+
+            /* Strip shadows and borders for cleaner printing */
+            .ack-card {
+                box-shadow: none !important;
+                border: none !important;
+                padding: 0 !important;
+            }
+
+            /* Force background colors to render in PDFs and Paper */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .table-header-row td {
+                background-color: #152036 !important;
+                color: #ffffff !important;
+            }
+        }
+
+        .btn-save-elegant {
+            text-decoration: none;
+        }
+
+
+        #fireworks-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 99999;
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: explode 2.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 1;
+            }
+
+            15% {
+                transform: translate(0, 0) scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+    <div class="container">
+        <!-- ===== NOTE CARD ===== -->
+        <div class="note-card">
+            <!-- HEADER -->
+            <div class="note-header">
+                <div class="note-title-wrap">
+                    <div class="note-icon">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <div>
+                        <div class="note-title" data-label="InstructionTitle">Instructions</div>
+                    </div>
+                </div>
+                <button type="button" class="note-lang-btn" onclick="toggleLang()" autocomplete="off">
+                    <span id="langLabel">ಕನ್ನಡ</span>
+                    <i class="fa-solid fa-language"></i>
+                </button>
+            </div>
+
+            <!-- BODY -->
+            <div class="inner-box">
+                <ul class="note-list">
+                    <li data-label="Note">Application will get rejected if any details submitted by you is found wrong/ incorrect.</li>
+
+                </ul>
+            </div>
+        </div>
+        <div id="ContentPlaceHolder1_step3" class="main-box">
+            
+            <div id="ContentPlaceHolder1_step8">
+                <div class="step-tabs">
+                    <i class="fa-solid fa-shield-check"></i>
+                    <span data-label="FINALSUBMIT">FINAL SUBMIT</span>
+                </div>
+                
+                <div class="table-responsive">
+                    <table id="ContentPlaceHolder1_tbl1" class="table custom-ack-table w-100 mx-auto">
+	<tbody><tr class="table-header-row">
+		<td colspan="4">
+                                    <span id="ContentPlaceHolder1_Label1" style="font-size:Large;font-weight:bold;">
+                                         <span data-label="ssp">State Scholarship Portal (Post Matric)-2026-27</span>
+                                    </span>
+                                </td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Student ID</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblStdID">25260186051</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Student Name</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblStdName">S Nazima Parveen</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Father Name / Mother Name</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblParentName">MAHABOOB BASHA S / GOUSIA FIROZINI S</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Date Of Birth</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblDOB">02/01/2006</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Tenth Registration Number </td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblTenth_Registration_Number">20210793090</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Tenth Pass Year</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblTenth_Pass_year">2021</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">NSP ID</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblnsp">-</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Caste Category</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblCasteCat">Cat II B</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Caste Certificate  Details</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblCasteNo">RD0039268641004 - CATEGORY I I B - MUSLIM</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Income Certificate Details</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblIncomeNo">RD0039268641004- (₹)60000</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Hosteller or Day Scholar </td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblHosOrDas">DayScholar</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Domicile</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblDomicile">Yes</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Physically Handicap  </td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblPhysically">No</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Renewal or Fresh </td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_LblRenewalorFresh">Renewal</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">College</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblcollege">T. John Institute of Technology, BANGALORE(Id: C-1285): C-1285</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Course</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblCourse">Bachelor of Engineering</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Course Discipline</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblCoursedescipline">COMPUTER SCIENCE AND ENGINEERING IOT AND CYBER SECURITY INCLUDING BLOCK CHAIN TECHNOLOGY</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Course Year</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblCourseyear">FOURTH</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Academic Year</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblacademicyear">2026-27</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Maximum Marks</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblMaximumMarks">1800.00</span></td>
+	</tr>
+	<tr>
+		<td align="left" colspan="2">Total Marks Obtained</td>
+		<td align="left" colspan="2">
+                                    <span id="ContentPlaceHolder1_lblTotalMarksObtained">1269.00</span></td>
+	</tr>
+</tbody></table>
+
+                </div>
+                <div id="ContentPlaceHolder1_divdeclaration" class="panel panel-primary">
+                    <div class="panel-heading">Declaration: This is to confirm that the above mentioned information is true to the best of my belief. I shall be liable for disqualification in case of any incorrect information. </div>
+                    <div class="panel-body">
+                        
+                        <div id="ContentPlaceHolder1_errormsg">
+                            <span id="ContentPlaceHolder1_lblmsg" style="color:Red;font-family:Times New Roman;font-size:Large;font-weight:bold;">Application has been submitted.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- ===== FOOTER NAV ===== -->
+        <div class="footer-nav">
+            <input type="submit" name="ctl00$ContentPlaceHolder1$lnkbtnprvs" value="Previous" id="ContentPlaceHolder1_lnkbtnprvs" class="btn btn-light" data-label="previous" autocomplete="off">
+        </div>
+    </div>
+    <div id="fireworks-container"></div>
+
+    <script type="text/javascript">
+        var freshLabels = {"InstructionTitle":{"en":"Instructions","kn":"ಸೂಚನೆಗಳು"},"SSLC":{"en":"SSLC","kn":"ಎಸ್‌ಎಸ್‌ಎಲ್‌ಸಿ"},"CBSE":{"en":"CBSE","kn":"ಸಿಬಿಎಸ್ಇ"},"ICSE":{"en":"ICSE","kn":"ಐಸಿಎಸ್ಇ"},"Other":{"en":"Other State Board / Before 2004 SSLC / IGCSE","kn":"ಹೊರರಾಜ್ಯ ಮಂಡಳಿ / 2004 ಕ್ಕಿಂತ ಮೊದಲು 10 ನೇ ತರಗತಿ / ಐಜಿಸಿಎಸ್‌ಇ"},"KOS":{"en":"Karnataka Open School","kn":"ಕರ್ನಾಟಕ ಮುಕ್ತ ಶಾಲೆ"},"NIOS":{"en":"National Institute of Open Schooling (NIOS)","kn":"ರಾಷ್ಟ್ರೀಯ ಮುಕ್ತ ಶಾಲಾ ಸಂಸ್ಥೆ (NIOS)"},"RegistrationNumber":{"en":"Registration Number","kn":"ನೋಂದಣಿ ಸಂಖ್ಯೆ"},"StudentName":{"en":"Student Name As In Certificate","kn":"ಪ್ರಮಾನಪತ್ರದಲ್ಲಿರುವಂತೆ ವಿದ್ಯಾರ್ಥಿಯ ಹೆಸರು"},"YearofPassing":{"en":"Year of Passing","kn":"ತೇರ್ಗಡೆಯಾದ ವರ್ಷ"},"DateofBirth":{"en":"Date of Birth","kn":"ಜನ್ಮ ದಿನಾಂಕ"},"CasInc":{"en":"Caste / Income","kn":"ಜಾತಿ / ಆದಾಯ"},"Disability":{"en":"Disability","kn":"ವಿಕಲಚೇತನ"},"Personal":{"en":"Personal","kn":"ವೈಯಕ್ತಿಕ"},"YesNo":{"en":"Are displayed details correct?","kn":"ಬಿತ್ತರಿಸಿರುವ ವಿವರಗಳು ಸರಿಯಾಗಿದೆಯೇ ?"},"RadioYes":{"en":"Yes","kn":"ಹೌದು"},"RadioNo":{"en":"No","kn":"ಇಲ್ಲ"},"Category":{"en":"Category","kn":"ವರ್ಗ"},"reset":{"en":"Reset","kn":"ಮರುಹೊಂದಿಸಿ"},"fetchdata":{"en":"Fetch Data","kn":"ದತ್ತಾಂಶವನ್ನು ಪಡೆಯಿರಿ"},"saveproceed":{"en":"Save and Proceed","kn":"ಉಳಿಸಿ ಮತ್ತು ಮುಂದುವರಿಯಿರಿ"},"edit":{"en":"EDIT","kn":"ತಿದ್ದು"},"cancel":{"en":"CANCEL","kn":"ರದ್ದು"},"previous":{"en":"Previous","kn":"ಹಿಂದೆ "},"next":{"en":"Next","kn":"ಮುಂದೆ"},"check":{"en":"Check","kn":"ಪರಿಶೀಲಿಸಿ"},"gender":{"en":"Gender","kn":"ಲಿಂಗ"},"male":{"en":"Male","kn":"ಗಂಡು"},"female":{"en":"FeMale","kn":"ಹೆಣ್ಣು"},"presentyearstudydetails":{"en":"Present Year Study Details","kn":"ಪ್ರಸ್ತುತ ವರ್ಷದ ಶೈಕ್ಷಣಿಕ ವಿವರಗಳು"},"previousyearstudydetails":{"en":"Previous Year Passed Details","kn":"ಹಿಂದಿನ ವರ್ಷ ತೇರ್ಗಡೆಯಾದ ವಿವರಗಳು"},"USNno":{"en":"Do you have USN (University Registration Number) Number?","kn":"ನಿಮ್ಮ ಬಳಿ USN (ವಿಶ್ವವಿದ್ಯಾಲಯ ನೋಂದಣಿ ಸಂಖ್ಯೆ) ಸಂಖ್ಯೆ ಇದೆಯೇ?"},"selectstate":{"en":"Select State","kn":"ರಾಜ್ಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"selectuniversity":{"en":"Select University","kn":"ವಿಶ್ವವಿದ್ಯಾನಿಲಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"selectcollege":{"en":"Select College","kn":"ಕಾಲೇಜನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"selectugpg":{"en":"Select UG or PG","kn":"ಪದವಿ ಅಥವಾ ಸ್ನಾತಕೋತ್ತರ ಪದವಿ ಆಯ್ಕೆಮಾಡಿ"},"college":{"en":"Select College","kn":"ಕಾಲೇಜನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"course":{"en":"Select Course","kn":"ಕೋರ್ಸ್ ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"coursestartdt":{"en":"Course Start Date","kn":"ಕೋರ್ಸ್ ಪ್ರಾರಂಭ ದಿನಾಂಕ"},"coursestartyear":{"en":"Select Course Year","kn":"ಕೋರ್ಸ್ ವರ್ಷವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"discipline":{"en":"Select Discipline","kn":"ಕೋರ್ಸ್ ಸಂಯೋಜನೆ"},"modeofadmission":{"en":"Select Mode of Admission","kn":"ಕೋರ್ಸ್ ಗೆ ಪ್ರವೇಶಾತಿಯ ವಿಧಾನವನ್ನು ಆಯ್ಕೆಮಾಡಿ"},"counsellingnumber":{"en":"Enter Counselling Number","kn":"ಕೌನ್ಸೆಲ್ಲಿಂಗ್ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ"},"counsellingadmissionyear":{"en":"Enter Counselling Admission Year","kn":"ಕೌನ್ಸೆಲ್ಲಿಂಗ್ ಮೂಲಕ ಪ್ರವೇಶಾತಿ ಪಡೆದ ವರ್ಷ ನಮೂದಿಸಿ"},"counsellingcourse":{"en":"Enter Counselling Course","kn":"ಕೌನ್ಸೆಲ್ಲಿಂಗ್ ಕೋರ್ಸ್ ನಮೂದಿಸಿ"},"collegename":{"en":"College Name","kn":"ಕಾಲೇಜಿನ ಹೆಸರು"},"coursename":{"en":"Course Name","kn":"ಕೋರ್ಸ್ ನ ಹೆಸರು"},"admissionyear":{"en":"Admission Year","kn":"ಪ್ರವೇಶಾತಿ ಪಡೆದ ವರ್ಷ"},"FatherName":{"en":"Father Name","kn":"ತಂದೆಯ ಹೆಸರು"},"MotherName":{"en":"Mother Name","kn":"ತಾಯಿಯ ಹೆಸರು"},"Save":{"en":"Save","kn":"ಉಳಿಸಿ"},"FINALSUBMIT":{"en":"FINAL SUBMIT","kn":"ಅರ್ಜಿ ಸಲ್ಲಿಕೆ"},"DocumentType":{"en":"Document Type","kn":"ದಾಖಲೆ ವಿಧ "},"ParentName":{"en":"Parent Name as in Certificate","kn":"ಪೋಷಕರ ಹೆಸರು"},"DateIssue":{"en":"Date Of Issue of Certificate","kn":"ಪ್ರಮಾನಪತ್ರವನ್ನು ನೀಡಿದ ದಿನಾಂಕ"},"UploadFile":{"en":"Upload Certificate File","kn":"ಪ್ರಮಾನಪತ್ರವನ್ನು ಅಪ್ಲೋಡ್ ಮಾಡಿರಿ"},"View":{"en":"View","kn":"ವೀಕ್ಷಿಸಿ"},"SSPID":{"en":"SSP ID","kn":"ಎಸ್‌ಎಸ್‌ಪಿ ಐಡಿ"},"CGPAOrMarks":{"en":"Select CGPA Or Marks","kn":"CGPA ಅಥವಾ ಮಾರ್ಕ್ಸ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ"},"MaximumMarks":{"en":"Enter Maximum Marks","kn":"ಪರೀಕ್ಷೆಯ ಗರಿಷ್ಟ ಅಂಕವನ್ನು ನಮೂದಿಸಿ"},"ObtainedMarks1":{"en":"Enter Obtained Marks","kn":"ಪರೀಕ್ಷೆಯಲ್ಲಿ ಗಳಿಸಿದ ಅಂಕವನ್ನು ನಮೂದಿಸಿ"},"Percentage":{"en":"Percentage","kn":"ಶೇಕಡಾವಾರು"},"CGPAMAX":{"en":"Enter CGPA MAX","kn":"ಪರೀಕ್ಷೆಯ ಗರಿಷ್ಟ CGPA ಅನ್ನು ನಮೂದಿಸಿ"},"ObtainedCGPA":{"en":"Enter Obtained CGPA","kn":"ಪರೀಕ್ಷೆಯಲ್ಲಿ ಗಳಿಸಿದ CGPA ಅನ್ನು ನಮೂದಿಸಿ"},"SemesterorAnnual":{"en":"Select Semester or Annual","kn":"ಪರೀಕ್ಷೆಯು ವಾರ್ಷಿಕ ಅಥವಾ ಸೆಮಿಸ್ಟರ್ ಎಂದು ಆಯ್ಕೆಮಾಡಿ"},"SelectBoard":{"en":"Select Board","kn":"ಶೈಕ್ಷಣಿಕ ಬೋರ್ಡ್ ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"},"Semester":{"en":"Semester","kn":"ಅರ್ಧವಾರ್ಷಿಕ"},"Annual":{"en":"Annual","kn":"ವಾರ್ಷಿಕ"},"Marks":{"en":"Marks","kn":"ಅಂಕಗಳು"},"Pass":{"en":"Pass","kn":"ತೇರ್ಗಡೆ"},"Fail":{"en":"Fail","kn":"ಅನುತ್ತೀರ್ಣತೆ"},"CGPA":{"en":"CGPA","kn":"CGPA"},"Note":{"en":"Application will get rejected if any details submitted by you is found wrong/ incorrect.","kn":"ನೀವು ಸಲ್ಲಿಸಿರುವ ಯಾವುದೇ ಮಾಹಿತಿಗಳು ತಪ್ಪಾಗಿದ್ದಲ್ಲಿ ನಿಮ್ಮ ಅರ್ಜಿಯನ್ನು ತಿರಸ್ಕರಿಸಲಾಗುವುದು. "},"Note7":{"en":"The study (Bonafide) details displayed here are received from the concerned University / UUCMS / Board / KEA; if the details being displayed are incorrect, please contact the concerned University / UUCMS / Board / KEA and get it corrected. Further, Application will get rejected if incorrect academic details are submitted.","kn":"ಇಲ್ಲಿ ನೀಡಲಾದ ಶೈಕ್ಷಣಿಕ (ಬೋನಾಫೈಡ್) ವಿವರಗಳನ್ನು ಸಂಬಂಧಪಟ್ಟ ವಿಶ್ವವಿದ್ಯಾಲಯ / UUCMS / ಬೋರ್ಡ್/ KEA ನಿಂದ ಸ್ವೀಕರಿಸಲಾಗಿದ್ದು, ಸದರಿ ವಿವರಗಳಲ್ಲಿ ಏನಾದರು ತಪ್ಪು ಇದ್ದಲ್ಲಿ ಸಂಬಂಧಪಟ್ಟ ವಿಶ್ವವಿದ್ಯಾಲಯ / UUCMS / ಬೋರ್ಡ್/KEA ರವರನ್ನು ಸಂಪರ್ಕಿಸಿ ಸರಿಪಡಿಸಿಕೊಂಡು ಅರ್ಜಿ ಸಲ್ಲಿಸಲು ತಿಳಿಸಲಾಗಿದೆ. ಹಾಗೂ ತಪ್ಪಾದ ವಿವರಗಳನ್ನು ನೀಡಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿದ್ದಲ್ಲಿ ಅರ್ಜಿಯನ್ನು ತಿರಸ್ಕರಿಸಲಾಗುವುದು."},"Note8":{"en":" Student should please note that if marks displayed in the academic details pop-up window is ‘0’, then it means that the result data of the said student has not yet been sent to SSP by the concerned university. In such cases, students are advised to continue with Application submission by ignoring the marks details as Result data of all students shall be taken from the Universities separately.","kn":"ಪ್ರದರ್ಶಿಸಲಾದ ಶೈಕ್ಷಣಿಕ ವಿವರಗಳ ಪಾಪ್-ಅಪ್ ವಿಂಡೋದಲ್ಲಿ ನಿಮ್ಮ ಅಂಕಗಳು ‘0’ ಎಂದು ನಮೂದಾಗಿದ್ದರೆ, ನಿಮ್ಮ ಫಲಿತಾಂಶದ ಮಾಹಿತಿಯನ್ನು ಸಂಬಂಧಪಟ್ಟ ವಿಶ್ವವಿದ್ಯಾಲಯವು ಇನ್ನೂ SSP ಗೆ ಕಳುಹಿಸಿಲ್ಲ ಎಂದು ಅರ್ಥ. ಅಂತಹ ಸಂದರ್ಭಗಳಲ್ಲಿ, ವಿದ್ಯಾರ್ಥಿಗಳು ಅಂಕಗಳ ವಿವರಗಳನ್ನು ನಿರ್ಲಕ್ಷಿಸುವ ಮೂಲಕ ಅರ್ಜಿ ಸಲ್ಲಿಕೆಯನ್ನು ಮುಂದುವರಿಸಲು ತಿಳಿಸಲಾಗಿದೆ. ಏಕೆಂದರೆ ಎಲ್ಲಾ ವಿದ್ಯಾರ್ಥಿಗಳ ಫಲಿತಾಂಶ ಮಾಹಿತಿಯನ್ನು ವಿಶ್ವವಿದ್ಯಾಲಯಗಳಿಂದ ಪ್ರತ್ಯೇಕವಾಗಿ ತೆಗೆದುಕೊಳ್ಳಲಾಗುತ್ತದೆ."},"Submit":{"en":"Submit","kn":"ಸಲ್ಲಿಸಿ"},"ssp":{"en":"State Scholarship Portal (Post Matric)-2026-27","kn":"2026-27 ಸಾಲಿನ ಮೆಟ್ರಿಕ್ ನಂತರದ ರಾಜ್ಯವಿದ್ಯಾರ್ಥಿವೇತನ ತಂತ್ರಾಂಶ"}};
+        sessionStorage.setItem('SSP_LABELS_Step2', JSON.stringify(freshLabels));
+        // console.log(freshLabels);
+    </script>
+    <script>
+        let LABELS = JSON.parse(sessionStorage.getItem('SSP_LABELS_Step2') || '{}');
+        let isKannada = localStorage.getItem('lang') === 'kn';
+        // console.log(LABELS);
+
+        function t(key) {
+            if (!LABELS[key]) return null;
+            return isKannada ? LABELS[key].kn : LABELS[key].en;
+        }
+
+        function applyLang() {
+            document.querySelectorAll('[data-label]').forEach(el => {
+
+                let translatedText = t(el.dataset.label);
+
+                if (!translatedText) return;
+
+                // Button
+                if (el.tagName === 'INPUT' &&
+                    (el.type === 'submit' || el.type === 'button')) {
+
+                    el.value = translatedText;
+                }
+
+                // Checkbox / RadioButton
+                else if (el.tagName === 'INPUT' &&
+                    (el.type === 'checkbox' || el.type === 'radio')) {
+
+                    const label = document.querySelector(
+                        `label[for="${el.id}"]`
+                    );
+
+                    if (label) {
+                        label.textContent = translatedText;
+                    }
+                }
+
+                // Placeholder
+                else if (el.placeholder !== undefined) {
+                    el.placeholder = translatedText;
+                }
+
+                // Normal controls
+                else {
+                    el.textContent = translatedText;
+                }
+            });
+            document.getElementById('langLabel').textContent = isKannada ? 'English' : 'ಕನ್ನಡ';
+        }
+
+        function toggleLang() {
+            isKannada = !isKannada;
+            localStorage.setItem('lang', isKannada ? 'kn' : 'en');
+            applyLang();
+        }
+
+        document.addEventListener('DOMContentLoaded', applyLang);
+    </script>
+
+
+    <script>
+        function createFirework(x, y) {
+
+            const container = document.getElementById("fireworks-container");
+
+            const colors = [
+                "#ff0000",
+                "#ff9900",
+                "#ffff00",
+                "#00ff00",
+                "#00ccff",
+                "#3366ff",
+                "#ff00ff",
+                "#ffffff"
+            ];
+
+            for (let i = 0; i < 80; i++) {
+
+                const particle = document.createElement("div");
+                particle.className = "firework-particle";
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 250 + 100;
+
+                particle.style.left = x + "px";
+                particle.style.top = y + "px";
+
+                particle.style.setProperty(
+                    "--x",
+                    Math.cos(angle) * distance + "px"
+                );
+
+                particle.style.setProperty(
+                    "--y",
+                    Math.sin(angle) * distance + "px"
+                );
+
+                particle.style.background =
+                    colors[Math.floor(Math.random() * colors.length)];
+
+                container.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 3000);
+            }
+        }
+
+        function startFireworks() {
+
+            let count = 0;
+
+            const interval = setInterval(() => {
+
+                createFirework(
+                    Math.random() * window.innerWidth,
+                    Math.random() * (window.innerHeight * 0.6)
+                );
+
+                count++;
+
+                if (count >= 20) { // ~10 seconds
+                    clearInterval(interval);
+                }
+
+            }, 500);
+        }
+    </script>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="ssp-footer">
+            <div class="container p-5">
+                <div class="row gy-4">
+                    <div class="col-md-3">
+                        <h6 class="footer-title">About SSP</h6>
+                        <p class="footer-text">State Scholarship Portal ensures efficient scholarship disbursement for deserving students.</p>
+                        <div class="footer-right">
+                            <img src="./State Scholarship Portal_files/nic.png" alt="NIC Logo" class="footer-logo" width="150px">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        
+                    </div>
+                    <div class="col-md-3">
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="footer-title">Official Links</h6>
+                        <ul class="footer-links">
+                            <li><a href="https://scholarships.gov.in/" target="_blank" rel="noopener noreferrer">NSP Portal</a></li>
+                            <li><a href="https://karnataka.gov.in/" target="_blank" rel="noopener noreferrer">Government of Karnataka</a></li>
+                            <li><a href="https://schooleducation.karnataka.gov.in/" target="_blank" rel="noopener noreferrer">Ministry of Education</a></li>
+                            <li><a href="https://ssp.postmatric.karnataka.gov.in/Post_SA_2627/feedback.aspx" target="_blank" rel="noopener noreferrer">Feedback</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                    <span>© 2026 State Scholarship Portal. All rights reserved.</span>
+                    <div class="footer-bottom-links">
+                        
+                        <span id="Label1">227</span>
+                    </div>
+
+                </div>
+                <div>
+                </div>
+            </div>
+
+        </footer>
+
+        <!-- Hidden Fields for later use if needed -->
+        <input type="hidden" name="ctl00$Label9" id="Label9" autocomplete="off">
+        <input type="hidden" name="ctl00$Label5" id="Label5" autocomplete="off">
+        <input type="hidden" name="ctl00$Label11" id="Label11" autocomplete="off">
+        <input type="hidden" name="ctl00$lbl_Date" id="lbl_Date" autocomplete="off">
+        <input type="hidden" name="ctl00$lblserver" id="lblserver" autocomplete="off">
+        <input type="hidden" name="ctl00$lblserver1" id="lblserver1" autocomplete="off">
+        <input type="hidden" name="ctl00$ddlLanguages" id="ddlLanguages" autocomplete="off">
+    
+<script type="text/javascript">new Sys.WebForms.Menu({ element: 'Menu1', disappearAfter: 500, orientation: 'horizontal', tabIndex: 0, disabled: false });</script></form>
+    <script>
+        function showContactUs() {
+            document.getElementById('modalbody').innerHTML = `
+     <div class="text-center mb-4">
+         <h4 class="fw-bold text-primary mb-2">
+             <i class="bi bi-headset"></i> Contact Support
+         </h4>
+         <div class="alert alert-danger shadow-sm mb-0">
+             <strong>1902</strong> - State Scholarship Portal Helpline Number
+         </div>
+     </div>
+
+     <div class="row g-3">
+
+         <div class="col-md-6">
+             <div class="card border-primary h-100 shadow-sm">
+                 <div class="card-body text-center">
+                     <div class="fs-1 text-primary mb-2">
+                         <i class="bi bi-people-fill"></i>
+                     </div>
+                     <h6 class="fw-bold text-primary">
+                         Social Welfare Department
+                     </h6>
+                     <p class="mb-0">
+                         <a href="tel:9008400010" class="text-decoration-none">
+                             9008400010
+                         </a><br/>
+                         <a href="tel:9008400078" class="text-decoration-none">
+                             9008400078
+                         </a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+
+         <div class="col-md-6">
+             <div class="card border-success h-100 shadow-sm">
+                 <div class="card-body text-center">
+                     <div class="fs-1 text-success mb-2">
+                         <i class="bi bi-tree-fill"></i>
+                     </div>
+                     <h6 class="fw-bold text-success">
+                         Tribal Welfare Department
+                     </h6>
+                     <p class="mb-0">
+                         <a href="tel:08022261789" class="text-decoration-none">
+                             080-22261789
+                         </a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+
+         <div class="col-md-6">
+             <div class="card border-warning h-100 shadow-sm">
+                 <div class="card-body text-center">
+                     <div class="fs-1 text-warning mb-2">
+                         <i class="bi bi-shield-fill-check"></i>
+                     </div>
+                     <h6 class="fw-bold text-warning">
+                         Minority Welfare Department
+                     </h6>
+                     <p class="mb-0">
+                         <a href="tel:08022535931" class="text-decoration-none">
+                             080-22535931
+                         </a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+
+         <div class="col-md-6">
+             <div class="card border-info h-100 shadow-sm">
+                 <div class="card-body text-center">
+                     <div class="fs-1 text-info mb-2">
+                         <i class="bi bi-person-badge-fill"></i>
+                     </div>
+                     <h6 class="fw-bold text-info">
+                         Backward Classes Welfare Department
+                     </h6>
+                     <p class="mb-0">
+                         <a href="tel:8050770004" class="text-decoration-none">
+                             8050770004
+                         </a>
+                     </p>
+                 </div>
+             </div>
+         </div>
+
+     </div>
+ `;
+
+            var modal = new bootstrap.Modal(document.getElementById('confirmDialog'));
+            modal.show();
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Clean ASP.NET inline styles
+            $(".navbar-nav li, .navbar-nav a, .navbar-nav ul").removeAttr('style');
+
+            // Convert ASP menu to Bootstrap dropdown
+            $(".navbar-nav li:has(ul)").addClass("dropdown");
+
+            $(".navbar-nav li.dropdown > a")
+                .addClass("dropdown-toggle")
+                .attr("data-bs-toggle", "dropdown")
+                .attr("aria-expanded", "false");
+
+            $(".navbar-nav li.dropdown ul").addClass("dropdown-menu");
+
+            // Close dropdown when link is clicked
+            $(".dropdown-item").on("click", function () {
+                var dropdown = $(this).closest(".dropdown-menu");
+                var toggle = dropdown.prev("a.dropdown-toggle");
+                if (toggle.length) {
+                    bootstrap.Dropdown.getInstance(toggle[0])?.hide();
+                }
+            });
+        });
+    </script>
+    <script src="./State Scholarship Portal_files/bootstrap.js.download"></script>
+
+
+    <div id="ssp-preloader" class="ssp-preloader" aria-hidden="true" role="status" aria-live="polite" style="opacity: 0; visibility: hidden;">
+        <div class="ssp-preloader-inner">
+            <img src="./State Scholarship Portal_files/kar_logo.png" alt="SSP logo" class="ssp-preloader-logo">
+            <div class="ssp-preloader-title">State Scholarship Portal</div>
+
+            <div class="ssp-preloader-bar" aria-hidden="true">
+                <div class="ssp-preloader-progress" id="sspProgress" style="width: 0%;"></div>
+            </div>
+            <div class="ssp-preloader-sub">Loading student details wait…</div>
+        </div>
+    </div>
+
+
+    <script>
+        // ======== Utility: loader control (targets #ssp-preloader) ========
+        (function () {
+            const loaderId = 'ssp-preloader';
+            const progressId = 'sspProgress';
+            let progressTimer = null;
+
+            function getLoader() {
+                return document.getElementById(loaderId);
+            }
+            function getProgress() {
+                return document.getElementById(progressId);
+            }
+
+            window.showLoader = function () {
+                const loader = getLoader();
+                if (!loader) { console.warn('showLoader: no #' + loaderId + ' found'); return; }
+                loader.setAttribute('aria-hidden', 'false');
+                loader.style.visibility = 'visible';
+                loader.style.opacity = '1';
+
+                // simple progress animation (will stop on hide)
+                const bar = getProgress();
+                if (bar) {
+                    bar.style.width = '10%';
+                    clearInterval(progressTimer);
+                    progressTimer = setInterval(() => {
+                        let w = parseFloat(bar.style.width) || 0;
+                        w = Math.min(95, w + (Math.random() * 8)); // advance randomly towards 95%
+                        bar.style.width = w + '%';
+                    }, 300);
+                }
+            }
+
+            window.hideLoader = function () {
+                const loader = getLoader();
+                if (!loader) { console.warn('hideLoader: no #' + loaderId + ' found'); return; }
+                loader.setAttribute('aria-hidden', 'true');
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+
+                const bar = getProgress();
+                if (bar) {
+                    bar.style.width = '100%';
+                    clearInterval(progressTimer);
+                    // reset after small delay so next show starts fresh
+                    setTimeout(() => { if (bar) bar.style.width = '0%'; }, 350);
+                }
+            }
+
+            // ======== Scroll memory (use valid behavior values) ========
+            window.addEventListener("beforeunload", function () {
+                sessionStorage.setItem("scrollPosition", window.scrollY);
+                // show loader on navigation (may be ignored by some browsers)
+                showLoader();
+            });
+
+            window.addEventListener("DOMContentLoaded", function () {
+                const scrollPosition = sessionStorage.getItem("scrollPosition");
+                if (scrollPosition !== null) {
+                    window.scrollTo({ top: parseInt(scrollPosition, 10), behavior: 'auto' });
+                    sessionStorage.removeItem("scrollPosition");
+                }
+                // hide on initial load
+                hideLoader();
+            });
+
+            // ======== Preserve other query params when removing "handler" ========
+            (function () {
+                const url = new URL(window.location.href);
+                if (url.searchParams.has("handler")) {
+                    url.searchParams.delete("handler");
+                    // keep other search params intact
+                    const newUrl = url.pathname + (url.search ? '?' + url.searchParams.toString() : '');
+                    history.replaceState({}, document.title, newUrl);
+                }
+            })();
+
+            // ======== Optional: hook into fetch to show loader for AJAX requests ========
+            // Wrap window.fetch to show/hide loader automatically for navigation-like fetches.
+            const originalFetch = window.fetch;
+            window.fetch = function (...args) {
+                showLoader();
+                return originalFetch.apply(this, args).finally(() => {
+                    // small delay for smoothness
+                    setTimeout(hideLoader, 250);
+                });
+            };
+
+            // If your app uses jQuery, you can also hook ajaxStart/ajaxStop:
+            if (window.jQuery) {
+                $(document).on('ajaxStart', showLoader).on('ajaxStop', () => setTimeout(hideLoader, 200));
+            }
+        })();
+    </script>
+    <script>
+        function initSearchableSelects() {
+            document.querySelectorAll('.searchable-select').forEach(function (select) {
+                if (select.dataset.searchInit === 'true') return;
+                select.dataset.searchInit = 'true';
+
+                var options = Array.from(select.options);
+
+                var wrapper = document.createElement('div');
+                wrapper.className = 'searchable-wrapper';
+                wrapper.style.position = 'relative';
+                select.parentNode.insertBefore(wrapper, select);
+                wrapper.appendChild(select);
+                select.style.display = 'none';
+
+                var displayBox = document.createElement('div');
+                displayBox.className = 'form-select';
+                displayBox.style.cursor = 'pointer';
+                displayBox.style.backgroundColor = '#fff';
+                displayBox.textContent = '-- Select --';
+                wrapper.insertBefore(displayBox, select);
+
+                var input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.placeholder = 'Type to search...';
+                input.autocomplete = 'off';
+                input.style.display = 'none';
+                wrapper.insertBefore(input, select);
+
+                var dropdown = document.createElement('div');
+                dropdown.className = 'list-group';
+                dropdown.style.cssText = 'position:absolute;z-index:9999;width:100%;max-height:200px;overflow-y:auto;display:none;border:1px solid #dee2e6;border-radius:0.375rem;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.1);';
+                wrapper.appendChild(dropdown);
+
+                var selectedValue = '';
+                var selectedText = '';
+                var activeIndex = -1;  // tracks highlighted item
+
+                function showInput() {
+                    displayBox.style.display = 'none';
+                    input.style.display = 'block';
+                    input.value = '';
+                    activeIndex = -1;
+                    input.focus();
+                    renderOptions('');
+                }
+
+                function revertToDisplay() {
+                    input.style.display = 'none';
+                    dropdown.style.display = 'none';
+                    displayBox.style.display = 'block';
+                    activeIndex = -1;
+
+                    if (selectedValue) {
+                        displayBox.textContent = selectedText;
+                        displayBox.style.color = '';
+                    } else {
+                        displayBox.textContent = '-- Select --';
+                        displayBox.style.color = '#6c757d';
+                    }
+                }
+
+                function getItems() {
+                    return Array.from(dropdown.querySelectorAll('.list-group-item-action'));
+                }
+
+                function setActiveItem(index) {
+                    var items = getItems();
+                    items.forEach(function (item) {
+                        item.classList.remove('active');
+                    });
+                    if (index >= 0 && index < items.length) {
+                        items[index].classList.add('active');
+                        items[index].scrollIntoView({ block: 'nearest' });
+                    }
+                    activeIndex = index;
+                }
+
+                function selectActiveItem() {
+                    var items = getItems();
+                    if (activeIndex >= 0 && activeIndex < items.length) {
+                        items[activeIndex].dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+                    }
+                }
+
+                function renderOptions(filter) {
+                    dropdown.innerHTML = '';
+                    activeIndex = -1;
+
+                    var filtered = options.filter(function (o) {
+                        if (o.value === '') return false;
+                        return o.text.toLowerCase().includes(filter.toLowerCase());
+                    });
+
+                    if (filtered.length === 0) {
+                        var noResult = document.createElement('div');
+                        noResult.className = 'list-group-item text-muted';
+                        noResult.textContent = 'No results found';
+                        dropdown.appendChild(noResult);
+                    } else {
+                        filtered.forEach(function (o) {
+                            var item = document.createElement('button');
+                            item.type = 'button';
+                            item.className = 'list-group-item list-group-item-action';
+                            item.textContent = o.text;
+                            item.addEventListener('mousedown', function (e) {
+                                e.preventDefault();
+                                select.value = o.value;
+                                selectedValue = o.value;
+                                selectedText = o.text;
+                                revertToDisplay();
+
+                                select.dispatchEvent(new Event('change', { bubbles: true }));
+                            });
+                            dropdown.appendChild(item);
+                        });
+                    }
+                    dropdown.style.display = 'block';
+                }
+
+                // ---- Keyboard navigation ----
+                input.addEventListener('keydown', function (e) {
+                    var items = getItems();
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        var next = activeIndex + 1 < items.length ? activeIndex + 1 : 0;
+                        setActiveItem(next);
+
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        var prev = activeIndex - 1 >= 0 ? activeIndex - 1 : items.length - 1;
+                        setActiveItem(prev);
+
+                    } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (activeIndex >= 0) {
+                            selectActiveItem();
+                        }
+
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        revertToDisplay();
+                    }
+                });
+
+                displayBox.addEventListener('click', showInput);
+                input.addEventListener('input', function () { activeIndex = -1; renderOptions(input.value); });
+                input.addEventListener('focus', function () { renderOptions(input.value); });
+                input.addEventListener('blur', function () {
+                    setTimeout(function () { revertToDisplay(); }, 150);
+                });
+
+                var preSelected = options.find(function (o) { return o.selected && o.value !== ''; });
+                if (preSelected) {
+                    selectedValue = preSelected.value;
+                    selectedText = preSelected.text;
+                    displayBox.textContent = preSelected.text;
+                    displayBox.style.color = '';
+                } else {
+                    displayBox.style.color = '#6c757d';
+                }
+            });
+        }
+        function reinitSearchableSelect(select) {
+            const wrapper = select.closest('.searchable-wrapper');
+            if (wrapper) {
+                wrapper.parentNode.insertBefore(select, wrapper); // move select out
+                wrapper.remove();                                  // remove stale wrapper
+                select.style.display = '';                         // restore visibility
+                delete select.dataset.searchInit;                  // clear init flag
+            }
+            initSearchableSelects(); // re-wrap with fresh options
+        }
+        document.addEventListener('DOMContentLoaded', initSearchableSelects);
+    </script>
+    <script>
+        function initDatePickers() {
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            var DAYS = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+            document.querySelectorAll('input[type="date"]').forEach(function (original) {
+                if (original.dataset.cdpInit) return;
+                original.dataset.cdpInit = 'true';
+
+                var isUpcoming = original.classList.contains('upcoming');
+                var isPast = original.classList.contains('past');
+                var hintText = isUpcoming ? 'Select today or a future date'
+                    : isPast ? 'Select today or a past date' : '';
+                var tipText = isUpcoming ? 'Only future dates allowed'
+                    : isPast ? 'Only past dates allowed' : '';
+
+                // ── wrapper ──────────────────────────────────────────────
+                var wrapper = document.createElement('div');
+                wrapper.className = 'cdp-wrapper';
+                original.parentNode.insertBefore(wrapper, original);
+
+                // badge chip on input border
+                if (isUpcoming || isPast) {
+                    var badge = document.createElement('span');
+                    badge.className = 'cdp-badge' + (isPast ? ' past-badge' : '');
+                    badge.textContent = isUpcoming ? 'Upcoming Only' : 'Past Only';
+                    wrapper.appendChild(badge);
+                }
+
+                // fake display input
+                var fakeInput = document.createElement('input');
+                fakeInput.type = 'text';
+                fakeInput.readOnly = true;
+                fakeInput.className = 'cdp-input';
+                original.classList.forEach(function (c) {
+                    if (!['upcoming', 'past', 'any'].includes(c)) fakeInput.classList.add(c);
+                });
+                fakeInput.placeholder = 'dd-mm-yyyy';
+                wrapper.appendChild(fakeInput);
+
+                // keep original hidden — model binding reads it
+                original.style.display = 'none';
+                wrapper.appendChild(original);
+
+                // hint line
+                var hint = document.createElement('div');
+                hint.className = 'cdp-hint';
+                hint.textContent = hintText;
+                wrapper.appendChild(hint);
+
+                // popup
+                var popup = document.createElement('div');
+                popup.className = 'cdp-popup';
+                wrapper.appendChild(popup);
+
+                // overlay inside popup
+                var overlay = document.createElement('div');
+                overlay.className = 'cdp-picker-overlay';
+                popup.appendChild(overlay);
+
+
+
+                // Load existing ASP.NET value
+                if (original.value) {
+                    selected = new Date(original.value);
+
+                    if (!isNaN(selected.getTime())) {
+                        fakeInput.value = fmtDisplay(selected);
+                        fakeInput.classList.add('is-valid');
+
+                        viewYear = selected.getFullYear();
+                        viewMonth = selected.getMonth();
+                        console.log(selected)
+
+
+
+                    } else {
+                        var selected = null;
+                        var viewYear = today.getFullYear();
+                        var viewMonth = today.getMonth();
+                        console.log(selected)
+
+                    }
+                    if (selected === undefined) {
+                        var viewYear = today.getFullYear();
+                        var viewMonth = today.getMonth();
+                        console.log(selected, "undefined")
+
+                    }
+                }
+
+                // ── helpers ──────────────────────────────────────────────
+                function isDisabled(dt) {
+                    var d = new Date(dt); d.setHours(0, 0, 0, 0);
+                    if (isUpcoming) return d < today;
+                    if (isPast) return d > today;
+                    return false;
+                }
+                function fmtDisplay(d) {
+                    return pad(d.getDate()) + '-' + pad(d.getMonth() + 1) + '-' + d.getFullYear();
+                }
+                function fmtISO(d) {
+                    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+                }
+                function pad(n) { return String(n).padStart(2, '0'); }
+                function el(tag, cls) {
+                    var e = document.createElement(tag);
+                    if (cls) e.className = cls;
+                    return e;
+                }
+                function mkBtn(cls, html) {
+                    var b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = cls;
+                    b.innerHTML = html;
+                    return b;
+                }
+
+                // ── render calendar ───────────────────────────────────────
+                function renderCalendar() {
+                    overlay.classList.remove('open');
+
+                    // detach overlay, wipe popup, re-attach overlay at end
+                    popup.removeChild(overlay);
+                    popup.innerHTML = '';
+                    popup.appendChild(overlay);
+
+                    var y = viewYear, m = viewMonth;
+                    var first = new Date(y, m, 1);
+                    var startDay = (first.getDay() + 6) % 7;
+                    var lastDay = new Date(y, m + 1, 0).getDate();
+
+                    // header
+                    var header = el('div', 'cdp-header');
+                    var myBtn = mkBtn('cdp-month-year-btn',
+                        MONTHS[m] + ', ' + y + ' <span class="cdp-caret">&#9660;</span>');
+                    myBtn.onclick = function (e) { e.stopPropagation(); renderOverlay(); };
+
+                    var navGroup = el('div', 'cdp-nav-group');
+                    var btnUp = mkBtn('cdp-nav', '&#8593;');
+                    var btnDown = mkBtn('cdp-nav', '&#8595;');
+                    btnUp.title = 'Previous month';
+                    btnDown.title = 'Next month';
+
+                    btnUp.onclick = function (e) {
+                        e.stopPropagation();
+                        if (--viewMonth < 0) { viewMonth = 11; viewYear--; }
+                        renderCalendar();
+                    };
+                    btnDown.onclick = function (e) {
+                        e.stopPropagation();
+                        if (++viewMonth > 11) { viewMonth = 0; viewYear++; }
+                        renderCalendar();
+                    };
+
+                    navGroup.appendChild(btnUp);
+                    navGroup.appendChild(btnDown);
+                    header.appendChild(myBtn);
+                    header.appendChild(navGroup);
+
+                    // day names
+                    var namesRow = el('div', 'cdp-day-names');
+                    DAYS.forEach(function (d) {
+                        var n = el('div', 'cdp-day-name');
+                        n.textContent = d;
+                        namesRow.appendChild(n);
+                    });
+
+                    // cells
+                    var grid = el('div', 'cdp-days');
+                    for (var i = 0; i < startDay; i++) {
+                        addCell(grid, new Date(y, m, i - startDay + 1), true);
+                    }
+                    for (var d = 1; d <= lastDay; d++) {
+                        addCell(grid, new Date(y, m, d), false);
+                    }
+                    var rem = 42 - startDay - lastDay;
+                    for (var i = 1; i <= rem; i++) {
+                        addCell(grid, new Date(y, m + 1, i), true);
+                    }
+
+                    // footer
+                    var footer = el('div', 'cdp-footer');
+                    var clearB = mkBtn('cdp-btn cdp-btn-clear', 'Clear');
+                    var todayB = mkBtn('cdp-btn', 'Today');
+                    clearB.onclick = function (e) { e.stopPropagation(); clearSel(); closePopup(); };
+                    todayB.onclick = function (e) {
+                        e.stopPropagation();
+                        if (!isDisabled(today)) pickDate(new Date(today));
+                    };
+                    footer.appendChild(clearB);
+                    footer.appendChild(todayB);
+
+                    // append all in order BEFORE overlay
+                    popup.insertBefore(footer, overlay);
+                    popup.insertBefore(grid, footer);
+                    popup.insertBefore(namesRow, grid);
+                    popup.insertBefore(header, namesRow);
+                }
+
+                function addCell(grid, date, otherMonth) {
+                    var dt = new Date(date); dt.setHours(0, 0, 0, 0);
+                    var disabled = isDisabled(dt);
+
+                    var cell = mkBtn('cdp-day', String(date.getDate()));
+                    if (otherMonth) cell.classList.add('cdp-other-month');
+                    if (disabled) cell.classList.add('cdp-disabled');
+                    if (dt.getTime() === today.getTime()) cell.classList.add('cdp-today');
+                    if (selected && dt.toDateString() === selected.toDateString()) {
+                        cell.classList.add('cdp-selected');
+                    }
+
+                    // tooltip for disabled
+                    if (disabled && tipText) {
+                        var tip = el('span', 'cdp-tip');
+                        tip.textContent = tipText;
+                        cell.appendChild(tip);
+                    }
+
+                    if (!disabled) {
+                        cell.addEventListener('click', function () { pickDate(dt); });
+                    }
+                    grid.appendChild(cell);
+                }
+
+                // ── overlay: month + scrollable year ─────────────────────
+                function renderOverlay() {
+                    overlay.innerHTML = '';
+
+                    var minY = isPast ? today.getFullYear() - 100 : today.getFullYear();
+                    var maxY = isUpcoming ? today.getFullYear() + 20 : today.getFullYear();
+                    if (!isUpcoming && !isPast) { minY = today.getFullYear() - 80; maxY = today.getFullYear() + 20; }
+
+                    // back button
+                    var backBtn = el('button', 'cdp-picker-back');
+                    backBtn.type = 'button';
+                    backBtn.textContent = '← Back';
+                    backBtn.onclick = function () { overlay.classList.remove('open'); };
+                    overlay.appendChild(backBtn);
+
+                    // month grid
+                    var mTitle = el('p', 'cdp-picker-title');
+                    mTitle.textContent = 'Month';
+                    overlay.appendChild(mTitle);
+
+                    var mGrid = el('div', 'cdp-picker-grid-month');
+                    MONTHS.forEach(function (mn, i) {
+                        var it = mkBtn('cdp-picker-item', mn.slice(0, 3));
+                        if (i === viewMonth) it.classList.add('active');
+                        it.onclick = function () {
+                            viewMonth = i;
+                            overlay.classList.remove('open');
+                            renderCalendar();
+                        };
+                        mGrid.appendChild(it);
+                    });
+                    overlay.appendChild(mGrid);
+
+                    // year scroll box
+                    var yTitle = el('p', 'cdp-picker-title');
+                    yTitle.textContent = 'Year';
+                    overlay.appendChild(yTitle);
+
+                    var yScroll = el('div', 'cdp-year-scroll');
+                    var yGrid = el('div', 'cdp-picker-grid-year');
+
+                    var activeYearBtn = null;
+                    for (var yi = maxY; yi >= minY; yi--) {
+                        (function (yr) {
+                            var it = mkBtn('cdp-picker-item', String(yr));
+                            if (yr === viewYear) {
+                                it.classList.add('active');
+                                activeYearBtn = it;
+                            }
+                            it.onclick = function () {
+                                viewYear = yr;
+                                overlay.classList.remove('open');
+                                renderCalendar();
+                            };
+                            yGrid.appendChild(it);
+                        })(yi);
+                    }
+                    yScroll.appendChild(yGrid);
+                    overlay.appendChild(yScroll);
+
+                    overlay.classList.add('open');
+
+                    // scroll active year into view
+                    if (activeYearBtn) {
+                        setTimeout(function () {
+                            activeYearBtn.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                        }, 60);
+                    }
+                }
+
+                // ── pick / clear ──────────────────────────────────────────
+                function pickDate(dt) {
+                    selected = dt;
+                    fakeInput.value = fmtDisplay(dt);
+                    original.value = fmtISO(dt);
+                    fakeInput.classList.remove('is-invalid');
+                    fakeInput.classList.add('is-valid');
+                    hint.textContent = hintText;
+                    hint.classList.remove('error');
+                    closePopup();
+                }
+
+                function clearSel() {
+                    selected = null;
+                    fakeInput.value = '';
+                    original.value = '';
+                    fakeInput.classList.remove('is-invalid', 'is-valid');
+                    hint.textContent = hintText;
+                    hint.classList.remove('error');
+                }
+
+                // ── open / close ──────────────────────────────────────────
+                function openPopup() {
+                    viewYear = selected ? selected.getFullYear() : today.getFullYear();
+                    viewMonth = selected ? selected.getMonth() : today.getMonth();
+                    renderCalendar();
+                    popup.classList.add('open');
+                }
+                function closePopup() {
+                    popup.classList.remove('open');
+                }
+
+                fakeInput.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    popup.classList.contains('open') ? closePopup() : openPopup();
+                });
+                document.addEventListener('click', function (e) {
+                    if (!wrapper.contains(e.target)) closePopup();
+                });
+                fakeInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openPopup(); }
+                    if (e.key === 'Escape') closePopup();
+                });
+
+                // ── validate ──────────────────────────────────────────────
+                original.cdpValidate = wrapper.validate = function () {
+                    if (!selected) {
+                        fakeInput.classList.add('is-invalid');
+                        hint.textContent = 'Please select a date.';
+                        hint.classList.add('error');
+                        return false;
+                    }
+                    fakeInput.classList.remove('is-invalid');
+                    hint.classList.remove('error');
+                    return true;
+                };
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initDatePickers);
+    </script>
+
+    <script>
+        (function () {
+            const guards = [
+                { face: "🧑‍✈️", title: "Whoa, easy there!", sub: "Academic year is locked by the system." },
+                { face: "🕵️", title: "Suspicious activity!", sub: "This field is read-only. Move along." },
+                { face: "🧑‍⚖️", title: "Order in the form!", sub: "Academic year cannot be modified here." },
+                { face: "🤖", title: "ACCESS DENIED.", sub: "Parameter is system-controlled." },
+                { face: "🧑‍🔧", title: "Hands off the config!", sub: "Admin only. Contact your administrator." },
+                { face: "👮", title: "Stop right there!", sub: "Academic year is protected data." },
+            ];
+
+            let msgIdx = 0;
+
+            function wire(select) {
+                if (select.dataset.sspWired) return;
+                select.dataset.sspWired = "1";
+
+                const shell = document.createElement("div");
+                shell.className = "ssp-shell";
+                select.parentNode.insertBefore(shell, select);
+                shell.appendChild(select);
+
+                const lockIcon = document.createElement("span");
+                lockIcon.className = "ssp-lock";
+                lockIcon.textContent = "🔒";
+                lockIcon.setAttribute("aria-hidden", "true");
+                shell.appendChild(lockIcon);
+
+                const bubble = document.createElement("div");
+                bubble.className = "ssp-bubble";
+                bubble.innerHTML = `
+     <div class="ssp-avatar">🧑‍✈️</div>
+     <div class="ssp-speech">
+     <strong class="ssp-title"></strong>
+     <span class="ssp-sub"></span>
+     </div>`;
+                shell.appendChild(bubble);
+
+                const faceEl = bubble.querySelector(".ssp-avatar");
+                const titleEl = bubble.querySelector(".ssp-title");
+                const subEl = bubble.querySelector(".ssp-sub");
+
+                const zone = document.createElement("div");
+                zone.className = "ssp-zone";
+                zone.setAttribute("tabindex", "0");
+                zone.setAttribute("role", "button");
+                zone.setAttribute("aria-label", "This field is locked");
+                shell.appendChild(zone);
+
+                let leaveTimer;
+
+                function enter() {
+                    clearTimeout(leaveTimer);
+                    const g = guards[msgIdx % guards.length];
+                    msgIdx++;
+                    faceEl.textContent = g.face;
+                    titleEl.textContent = g.title;
+                    subEl.textContent = g.sub;
+                    shell.classList.add("ssp-hovered");
+                    bubble.classList.add("ssp-show");
+
+                    shell.classList.remove("ssp-do-shake");
+                    void shell.offsetWidth;
+                    shell.classList.add("ssp-do-shake");
+                    shell.addEventListener("animationend",
+                        () => shell.classList.remove("ssp-do-shake"), { once: true });
+
+                    faceEl.classList.remove("ssp-do-nod");
+                    void faceEl.offsetWidth;
+                    faceEl.classList.add("ssp-do-nod");
+                    faceEl.addEventListener("animationend",
+                        () => faceEl.classList.remove("ssp-do-nod"), { once: true });
+                }
+
+                function leave() {
+                    shell.classList.remove("ssp-hovered");
+                    leaveTimer = setTimeout(() => bubble.classList.remove("ssp-show"), 140);
+                }
+
+                zone.addEventListener("mouseenter", enter);
+                zone.addEventListener("mouseleave", leave);
+                zone.addEventListener("focus", enter);
+                zone.addEventListener("blur", leave);
+            }
+
+            const LOCKED = [
+                "select[disabled]",
+                "select[readonly]",
+                "input[type='date'][disabled]",
+                "input[type='date'][readonly]",
+                "textarea[disabled]",
+                "textarea[readonly]"
+            ].join(", ");
+            document.querySelectorAll(LOCKED).forEach(wire);
+
+            new MutationObserver(mutations => {
+                mutations.forEach(m => m.addedNodes.forEach(node => {
+                    if (node.nodeType !== 1) return;
+                    if (node.matches?.(LOCKED)) wire(node);
+                    node.querySelectorAll?.(LOCKED).forEach(wire);
+                }));
+            }).observe(document.body, { childList: true, subtree: true });
+        })();
+    </script>
+
+    
+    <script src="./State Scholarship Portal_files/datatables.js.download"></script>
+    <script src="./State Scholarship Portal_files/datatables.min.js.download"></script>
+    <script>
+        $(document).ready(function () {
+            $('#ContentPlaceHolder1_grid_datatable').DataTable({
+                "pagingType": "full_numbers",
+                "order": [[0, "asc"]],
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ]
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btnOk').addEventListener('click', function () {
+                if (redirectUrl !== '') {
+                    window.location.href = redirectUrl;
+                }
+            });
+        });
+    </script>
+    <script src="./State Scholarship Portal_files/blocksecurities.js.download" type="text/javascript"></script>
+
+
+</body></html>
