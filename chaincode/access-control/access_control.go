@@ -27,6 +27,26 @@ type AccessControlContract struct {
 	contractapi.Contract
 }
 
+func validateAccessDecision(
+	assetID string,
+	requesterDID string,
+	riskScore int,
+) error {
+	if assetID == "" {
+		return fmt.Errorf("asset ID cannot be empty")
+	}
+
+	if requesterDID == "" {
+		return fmt.Errorf("requester DID cannot be empty")
+	}
+
+	if riskScore < 0 || riskScore > 100 {
+		return fmt.Errorf("risk score must be between 0 and 100")
+	}
+
+	return nil
+}
+
 // LogDecision records an access-control decision.
 //
 // The log is append-only. There is intentionally no
@@ -39,19 +59,8 @@ func (c *AccessControlContract) LogDecision(
 	allowed bool,
 ) error {
 
-	// Validate asset ID.
-	if assetID == "" {
-		return fmt.Errorf("asset ID cannot be empty")
-	}
-
-	// Validate requester DID.
-	if requesterDID == "" {
-		return fmt.Errorf("requester DID cannot be empty")
-	}
-
-	// Validate risk score.
-	if riskScore < 0 || riskScore > 100 {
-		return fmt.Errorf("risk score must be between 0 and 100")
+	if err := validateAccessDecision(assetID, requesterDID, riskScore); err != nil {
+		return err
 	}
 
 	// Get the current number of access logs.
