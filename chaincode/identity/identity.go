@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 
+	"github.com/hyperledger/fabric-chaincode-go/v2/shim"
 	"github.com/hyperledger/fabric-contract-api-go/v2/contractapi"
 )
 
@@ -114,7 +116,17 @@ func main() {
 	if err != nil {
 		panic(fmt.Sprintf("Error creating identity chaincode: %v", err))
 	}
-	if err := chaincode.Start(); err != nil {
-		panic(fmt.Sprintf("Error starting identity chaincode: %v", err))
+
+	server := &shim.ChaincodeServer{
+		CCID:    os.Getenv("CHAINCODE_ID"),
+		Address: os.Getenv("CHAINCODE_SERVER_ADDRESS"),
+		CC:      chaincode,
+		TLSProps: shim.TLSProperties{
+			Disabled: true,
+		},
+	}
+
+	if err := server.Start(); err != nil {
+		panic(fmt.Sprintf("Error starting identity chaincode server: %v", err))
 	}
 }
