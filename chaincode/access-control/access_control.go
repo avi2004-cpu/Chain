@@ -1,358 +1,136 @@
-<<<<<<< HEAD
 package main
-
-// Access-control chaincode — ports AccessControl.sol logic.
-// Functions: LogDecision, GetLogCount, GetLog.
-// Must be append-only: no update/delete function should exist.
-// Owner: Jeswin
 
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"strconv"
+	"time"
 
+	"github.com/hyperledger/fabric-chaincode-go/v2/shim"
 	"github.com/hyperledger/fabric-contract-api-go/v2/contractapi"
 )
 
-// AccessLog represents one access-control decision.
+type AccessControlContract struct {
+	contractapi.Contract
+}
+
 type AccessLog struct {
-	Index        int    `json:"index"`
-	AssetID      string `json:"assetID"`
-	RequesterDID string `json:"requesterDID"`
+	AssetID      string `json:"assetId"`
+	RequesterDID string `json:"requesterDid"`
 	RiskScore    int    `json:"riskScore"`
 	Allowed      bool   `json:"allowed"`
 	Timestamp    string `json:"timestamp"`
 }
 
-// AccessControlContract provides access-control functions.
-type AccessControlContract struct {
-	contractapi.Contract
-}
+const logCountKey = "LOG_COUNT"
 
-// LogDecision records an access-control decision.
-//
-// The log is append-only. There is intentionally no
-// UpdateLog or DeleteLog function.
-func (c *AccessControlContract) LogDecision(
-	ctx contractapi.TransactionContextInterface,
-	assetID string,
-	requesterDID string,
-	riskScore int,
-	allowed bool,
-) error {
-
-	// Validate asset ID.
+// LogDecision appends a new access decision. Append-only by design — no
+// update or delete function exists for log entries.
+func (c *AccessControlContract) LogDecision(ctx contractapi.TransactionContextInterface, assetID string, requesterDID string, riskScore int, allowed bool) error {
 	if assetID == "" {
-		return fmt.Errorf("asset ID cannot be empty")
+		return fmt.Errorf("assetID cannot be empty")
 	}
-
-	// Validate requester DID.
 	if requesterDID == "" {
-		return fmt.Errorf("requester DID cannot be empty")
+		return fmt.Errorf("requesterDID cannot be empty")
 	}
-
-	// Validate risk score.
 	if riskScore < 0 || riskScore > 100 {
-		return fmt.Errorf("risk score must be between 0 and 100")
+		return fmt.Errorf("riskScore must be between 0 and 100")
 	}
 
-	// Get the current number of access logs.
-	count, err := c.GetLogCount(ctx)
+	count, err := c.getLogCount(ctx)
 	if err != nil {
-		return fmt.Errorf("failed to get log count: %w", err)
-	}
-
-	// The next log gets the next sequential index.
-	index := count
-
-	// Create a unique ledger key using the index.
-	key := fmt.Sprintf("ACCESSLOG_%d", index)
-
-	// Check that the key does not already exist.
-	existing, err := ctx.GetStub().GetState(key)
-	if err != nil {
-		return fmt.Errorf("failed to check existing log: %w", err)
-	}
-
-	if existing != nil {
-		return fmt.Errorf("access log %d already exists", index)
-	}
-
-	// Get the Fabric transaction timestamp.
-	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
-	if err != nil {
-		return fmt.Errorf("failed to get transaction timestamp: %w", err)
-	}
-
-	timestamp := txTimestamp.AsTime().UTC().Format("2006-01-02T15:04:05Z")
-
-	// Create the access log.
-	log := AccessLog{
-		Index:        index,
-		AssetID:      assetID,
-		RequesterDID: requesterDID,
-		RiskScore:    riskScore,
-		Allowed:      allowed,
-		Timestamp:    timestamp,
-	}
-
-	// Convert the log to JSON.
-	logJSON, err := json.Marshal(log)
-	if err != nil {
-		return fmt.Errorf("failed to serialize access log: %w", err)
-	}
-
-	// Store the log on the ledger.
-	if err := ctx.GetStub().PutState(key, logJSON); err != nil {
-		return fmt.Errorf("failed to store access log: %w", err)
-	}
-
-	return nil
-}
-
-// GetLogCount returns the number of access-control logs.
-func (c *AccessControlContract) GetLogCount(
-	ctx contractapi.TransactionContextInterface,
-) (int, error) {
-
-	startKey := "ACCESSLOG_"
-	endKey := "ACCESSLOG_~"
-
-	iterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
-	if err != nil {
-		return 0, fmt.Errorf("failed to create log iterator: %w", err)
-	}
-	defer iterator.Close()
-
-	count := 0
-
-	for iterator.HasNext() {
-		_, err := iterator.Next()
-		if err != nil {
-			return 0, fmt.Errorf("failed to iterate access logs: %w", err)
-		}
-
-		count++
-	}
-
-	return count, nil
-}
-
-// GetLog retrieves an access log using its index.
-func (c *AccessControlContract) GetLog(
-	ctx contractapi.TransactionContextInterface,
-	index int,
-) (string, error) {
-
-	if index < 0 {
-		return "", fmt.Errorf("log index cannot be negative")
-	}
-
-	key := fmt.Sprintf("ACCESSLOG_%d", index)
-
-	logJSON, err := ctx.GetStub().GetState(key)
-	if err != nil {
-		return "", fmt.Errorf("failed to read access log: %w", err)
-	}
-
-	if logJSON == nil {
-		return "", fmt.Errorf("access log %d does not exist", index)
-	}
-
-	return string(logJSON), nil
-}
-
-// main starts the Access-Control chaincode.
-func main() {
-	chaincode, err := contractapi.NewChaincode(&AccessControlContract{})
-	if err != nil {
-		panic(err)
-	}
-
-	if err := chaincode.Start(); err != nil {
-		panic(err)
-	}
-}
-=======
-package main
-
-// Access-control chaincode — ports AccessControl.sol logic.
-// Functions: LogDecision, GetLogCount, GetLog.
-// Must be append-only: no update/delete function should exist.
-// Owner: Jeswin
-
-import (
-	"encoding/json"
-	"fmt"
-
-	"github.com/hyperledger/fabric-contract-api-go/v2/contractapi"
-)
-
-// AccessLog represents one access-control decision.
-type AccessLog struct {
-	Index        int    `json:"index"`
-	AssetID      string `json:"assetID"`
-	RequesterDID string `json:"requesterDID"`
-	RiskScore    int    `json:"riskScore"`
-	Allowed      bool   `json:"allowed"`
-	Timestamp    string `json:"timestamp"`
-}
-
-// AccessControlContract provides access-control functions.
-type AccessControlContract struct {
-	contractapi.Contract
-}
-
-func validateAccessDecision(
-	assetID string,
-	requesterDID string,
-	riskScore int,
-) error {
-	if assetID == "" {
-		return fmt.Errorf("asset ID cannot be empty")
-	}
-
-	if requesterDID == "" {
-		return fmt.Errorf("requester DID cannot be empty")
-	}
-
-	if riskScore < 0 || riskScore > 100 {
-		return fmt.Errorf("risk score must be between 0 and 100")
-	}
-
-	return nil
-}
-
-// LogDecision records an access-control decision.
-//
-// The log is append-only. There is intentionally no
-// UpdateLog or DeleteLog function.
-func (c *AccessControlContract) LogDecision(
-	ctx contractapi.TransactionContextInterface,
-	assetID string,
-	requesterDID string,
-	riskScore int,
-	allowed bool,
-) error {
-
-	if err := validateAccessDecision(assetID, requesterDID, riskScore); err != nil {
 		return err
 	}
 
-	// Get the current number of access logs.
-	count, err := c.GetLogCount(ctx)
-	if err != nil {
-		return fmt.Errorf("failed to get log count: %w", err)
-	}
-
-	// The next log gets the next sequential index.
-	index := count
-
-	// Create a unique ledger key using the index.
-	key := fmt.Sprintf("ACCESSLOG_%d", index)
-
-	// Check that the key does not already exist.
-	existing, err := ctx.GetStub().GetState(key)
-	if err != nil {
-		return fmt.Errorf("failed to check existing log: %w", err)
-	}
-
-	if existing != nil {
-		return fmt.Errorf("access log %d already exists", index)
-	}
-
-	// Get the Fabric transaction timestamp.
 	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
 	if err != nil {
-		return fmt.Errorf("failed to get transaction timestamp: %w", err)
+		return fmt.Errorf("failed to get transaction timestamp: %v", err)
 	}
 
-	timestamp := txTimestamp.AsTime().UTC().Format("2006-01-02T15:04:05Z")
-
-	// Create the access log.
-	log := AccessLog{
-		Index:        index,
+	logEntry := AccessLog{
 		AssetID:      assetID,
 		RequesterDID: requesterDID,
 		RiskScore:    riskScore,
 		Allowed:      allowed,
-		Timestamp:    timestamp,
+		Timestamp:    time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).UTC().Format(time.RFC3339),
 	}
 
-	// Convert the log to JSON.
-	logJSON, err := json.Marshal(log)
+	logJSON, err := json.Marshal(logEntry)
 	if err != nil {
-		return fmt.Errorf("failed to serialize access log: %w", err)
+		return fmt.Errorf("failed to marshal log entry: %v", err)
 	}
 
-	// Store the log on the ledger.
-	if err := ctx.GetStub().PutState(key, logJSON); err != nil {
-		return fmt.Errorf("failed to store access log: %w", err)
+	logKey := fmt.Sprintf("LOG_%d", count)
+	if err := ctx.GetStub().PutState(logKey, logJSON); err != nil {
+		return fmt.Errorf("failed to write log entry: %v", err)
+	}
+
+	if err := ctx.GetStub().PutState(logCountKey, []byte(strconv.Itoa(count+1))); err != nil {
+		return fmt.Errorf("failed to update log count: %v", err)
+	}
+
+	if err := ctx.GetStub().SetEvent("AccessDecided", logJSON); err != nil {
+		return fmt.Errorf("failed to emit event: %v", err)
 	}
 
 	return nil
 }
 
-// GetLogCount returns the number of access-control logs.
-func (c *AccessControlContract) GetLogCount(
-	ctx contractapi.TransactionContextInterface,
-) (int, error) {
-
-	startKey := "ACCESSLOG_"
-	endKey := "ACCESSLOG_~"
-
-	iterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
-	if err != nil {
-		return 0, fmt.Errorf("failed to create log iterator: %w", err)
-	}
-	defer iterator.Close()
-
-	count := 0
-
-	for iterator.HasNext() {
-		_, err := iterator.Next()
-		if err != nil {
-			return 0, fmt.Errorf("failed to iterate access logs: %w", err)
-		}
-
-		count++
-	}
-
-	return count, nil
+func (c *AccessControlContract) GetLogCount(ctx contractapi.TransactionContextInterface) (int, error) {
+	return c.getLogCount(ctx)
 }
 
-// GetLog retrieves an access log using its index.
-func (c *AccessControlContract) GetLog(
-	ctx contractapi.TransactionContextInterface,
-	index int,
-) (string, error) {
-
-	if index < 0 {
-		return "", fmt.Errorf("log index cannot be negative")
-	}
-
-	key := fmt.Sprintf("ACCESSLOG_%d", index)
-
-	logJSON, err := ctx.GetStub().GetState(key)
+func (c *AccessControlContract) GetLog(ctx contractapi.TransactionContextInterface, index int) (string, error) {
+	count, err := c.getLogCount(ctx)
 	if err != nil {
-		return "", fmt.Errorf("failed to read access log: %w", err)
+		return "", err
+	}
+	if index < 0 || index >= count {
+		return "", fmt.Errorf("log index %d out of range (0-%d)", index, count-1)
 	}
 
+	logJSON, err := ctx.GetStub().GetState(fmt.Sprintf("LOG_%d", index))
+	if err != nil {
+		return "", fmt.Errorf("failed to read log entry: %v", err)
+	}
 	if logJSON == nil {
-		return "", fmt.Errorf("access log %d does not exist", index)
+		return "", fmt.Errorf("log entry %d not found", index)
 	}
-
 	return string(logJSON), nil
 }
 
-// main starts the Access-Control chaincode.
+func (c *AccessControlContract) getLogCount(ctx contractapi.TransactionContextInterface) (int, error) {
+	countBytes, err := ctx.GetStub().GetState(logCountKey)
+	if err != nil {
+		return 0, fmt.Errorf("failed to read log count: %v", err)
+	}
+	if countBytes == nil {
+		return 0, nil
+	}
+	count, err := strconv.Atoi(string(countBytes))
+	if err != nil {
+		return 0, fmt.Errorf("failed to parse log count: %v", err)
+	}
+	return count, nil
+}
+
 func main() {
 	chaincode, err := contractapi.NewChaincode(&AccessControlContract{})
 	if err != nil {
-		panic(err)
+		panic(fmt.Sprintf("Error creating access-control chaincode: %v", err))
 	}
 
-	if err := chaincode.Start(); err != nil {
-		panic(err)
+	server := &shim.ChaincodeServer{
+		CCID:    os.Getenv("CHAINCODE_ID"),
+		Address: os.Getenv("CHAINCODE_SERVER_ADDRESS"),
+		CC:      chaincode,
+		TLSProps: shim.TLSProperties{
+			Disabled: true,
+		},
+	}
+
+	if err := server.Start(); err != nil {
+		panic(fmt.Sprintf("Error starting access-control chaincode server: %v", err))
 	}
 }
->>>>>>> ff1437386be7c3518ff40e0e472a41b048fde729
