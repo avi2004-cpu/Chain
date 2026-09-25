@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { getContract } from '../gateway/connection.js';
-
+import { getContract, decode } from '../gateway/connection.js';
 const router = Router();
 
 router.post('/register', async (req, res) => {
@@ -24,9 +23,9 @@ router.get('/:address', async (req, res) => {
     ]);
     res.json({
       address: req.params.address,
-      role: role.toString(),
-      did: did.toString(),
-      registered: registered.toString() === 'true',
+      role: decode(role),
+      did: decode(did),
+      registered: decode(registered) === 'true',
     });
   } catch (err) {
     res.status(404).json({ error: err.message });

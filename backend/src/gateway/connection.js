@@ -64,3 +64,7 @@ export function closeConnection() {
   gatewayInstance?.close();
   clientInstance?.close();
 }
+
+export function decode(bytes) {
+  return Buffer.from(bytes).toString('utf8');
+}
