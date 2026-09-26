@@ -185,6 +185,7 @@ func main() {
 		Chaincode: chaincode,
 		CCID:      chaincodeID,
 		Address:   address,
+		CC: 	  chaincode,
 		TLSProps: shim.TLSProperties{
 			Disabled: true,
 		},
