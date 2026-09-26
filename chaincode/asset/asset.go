@@ -182,7 +182,6 @@ func main() {
 	}
 
 	server := &shim.ChaincodeServer{
-		Chaincode: chaincode,
 		CCID:      chaincodeID,
 		Address:   address,
 		CC: 	  chaincode,
