@@ -10,7 +10,7 @@ import (
 	"github.com/hyperledger/fabric-chaincode-go/v2/shim"
 	"github.com/hyperledger/fabric-contract-api-go/v2/contractapi"
 )
-
+const logCountKey = "LOG_COUNT"
 type AccessControlContract struct {
 	contractapi.Contract
 }
