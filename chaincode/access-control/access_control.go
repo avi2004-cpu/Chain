@@ -16,18 +16,16 @@ type AccessControlContract struct {
 }
 
 type AccessLog struct {
-	AssetID      string `json:"assetId"`
-	RequesterDID string `json:"requesterDid"`
-	RiskScore    int    `json:"riskScore"`
-	Allowed      bool   `json:"allowed"`
-	Timestamp    string `json:"timestamp"`
+	AssetID        string `json:"assetId"`
+	RequesterDID   string `json:"requesterDid"`
+	Classification string `json:"classification"`
+	RiskScore      int    `json:"riskScore"`
+	Allowed        bool   `json:"allowed"`
+	TxID           string `json:"txId"`
+	Timestamp      string `json:"timestamp"`
 }
 
-const logCountKey = "LOG_COUNT"
-
-// LogDecision appends a new access decision. Append-only by design — no
-// update or delete function exists for log entries.
-func (c *AccessControlContract) LogDecision(ctx contractapi.TransactionContextInterface, assetID string, requesterDID string, riskScore int, allowed bool) error {
+func (c *AccessControlContract) LogDecision(ctx contractapi.TransactionContextInterface, assetID string, requesterDID string, classification string, riskScore int, allowed bool) error {
 	if assetID == "" {
 		return fmt.Errorf("assetID cannot be empty")
 	}
@@ -49,11 +47,13 @@ func (c *AccessControlContract) LogDecision(ctx contractapi.TransactionContextIn
 	}
 
 	logEntry := AccessLog{
-		AssetID:      assetID,
-		RequesterDID: requesterDID,
-		RiskScore:    riskScore,
-		Allowed:      allowed,
-		Timestamp:    time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).UTC().Format(time.RFC3339),
+		AssetID:        assetID,
+		RequesterDID:   requesterDID,
+		Classification: classification,
+		RiskScore:      riskScore,
+		Allowed:        allowed,
+		TxID:           ctx.GetStub().GetTxID(),
+		Timestamp:      time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).UTC().Format(time.RFC3339),
 	}
 
 	logJSON, err := json.Marshal(logEntry)
@@ -70,11 +70,7 @@ func (c *AccessControlContract) LogDecision(ctx contractapi.TransactionContextIn
 		return fmt.Errorf("failed to update log count: %v", err)
 	}
 
-	if err := ctx.GetStub().SetEvent("AccessDecided", logJSON); err != nil {
-		return fmt.Errorf("failed to emit event: %v", err)
-	}
-
-	return nil
+	return ctx.GetStub().SetEvent("AccessDecided", logJSON)
 }
 
 func (c *AccessControlContract) GetLogCount(ctx contractapi.TransactionContextInterface) (int, error) {

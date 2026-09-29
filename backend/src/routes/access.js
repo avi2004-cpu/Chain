@@ -33,4 +33,24 @@ router.get('/logs', async (req, res) => {
   }
 });
 
+router.post('/request', async (req, res) => {
+  try {
+    const { assetId, requesterDID, classification, anomalyDevice, anomalyLocation, anomalyTime, requiresMultiSig } = req.body;
+    const result = computeRisk({ classification, anomalyDevice, anomalyLocation, anomalyTime, requiresMultiSig });
+    const allowed = result.outcome === 'ALLOW';
+
+    const contract = await getContract('access-control');
+    const commit = contract.submitAsync('LogDecision', {
+      arguments: [assetId, requesterDID, classification, String(result.score), String(allowed)],
+    });
+    const submitResult = await commit;
+    const txId = submitResult.getTransactionId ? submitResult.getTransactionId() : undefined;
+    await submitResult.getStatus();
+
+    res.json({ ...result, txHash: txId });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 export default router;

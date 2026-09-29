@@ -35,4 +35,14 @@ router.post('/:id/transfer', async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const contract = await getContract('asset');
+    const result = await contract.evaluateTransaction('GetAllAssets');
+    res.json(JSON.parse(decode(result)));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
