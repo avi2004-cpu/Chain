@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getContract } from '../gateway/connection.js';
+import { getContract, decode } from '../gateway/connection.js';
 
 const router = Router();
 

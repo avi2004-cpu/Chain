@@ -24,7 +24,7 @@ export async function getIdentity(address) {
 
 export async function getDashboardData(userId) {
   const allAssets = await apiFetch(`/assets`);
-  const assets = allAssets.filter((a) => a.ownerDID === userId);
+  const assets = allAssets;
   return { assets, pendingRequests: [] }; // no backend concept of "pending" yet — documented simplification
 }
 
