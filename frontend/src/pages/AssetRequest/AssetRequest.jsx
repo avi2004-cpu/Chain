@@ -86,7 +86,6 @@ export default function AssetRequest({ onNavigateToDecision }) {
         ? 'did:fabric:eng-a41f9c'
         : address
     });
-    
     if (!targetAsset) {
       showToast('Please select an asset first', 'error');
       return;
@@ -447,7 +446,12 @@ export default function AssetRequest({ onNavigateToDecision }) {
               <div className="detail-row"><div className="detail-k">Organization</div><div className="detail-v">{selectedAsset.unit}</div></div>
               <div className="detail-row"><div className="detail-k">Format</div><div className="detail-v">{selectedAsset.format}</div></div>
               <div className="detail-row"><div className="detail-k">Size</div><div className="detail-v">{selectedAsset.size}</div></div>
-              <div className="detail-row"><div className="detail-k">SHA-256 Hash</div><div className="detail-v mono">{selectedAsset.hash.slice(0, 26)}...</div></div>
+              <div className="detail-row">
+                <div className="detail-k">SHA-256 Hash</div>
+                <div className="detail-v mono">
+                  {(selectedAsset.metadataHash || selectedAsset.hash || 'Not available').slice(0, 26)}...
+                </div>
+              </div>
             </div>
             <div className="drawer-foot">
               <button
