@@ -1,0 +1,38 @@
+# Node
+node_modules/
+dist/
+build/
+.env
+.env.local
+npm-debug.log*
+
+# Go
+*.exe
+*.test
+*.out
+vendor/
+
+# Fabric — NEVER commit these, they are cryptographic identity material
+fabric-network/organizations/
+fabric-network/channel-artifacts/
+fabric-network/system-genesis-block/
+**/wallet/
+**/*.pem
+**/*.key
+**/msp/
+
+# OS/editor
+.DS_Store
+.vscode/
+*.log
+
+# Editor swap files + compiled chaincode binaries (built by Docker/CCaaS)
+*.swp
+*.swo
+*.swl
+*.swm
+*.swn
+chaincode/*/access-control
+chaincode/*/asset
+chaincode/*/asset-chaincode
+chaincode/*/identity
