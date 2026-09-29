@@ -1,4 +1,6 @@
+
 /* eslint-disable react-hooks/set-state-in-effect */
+import { useWallet } from '../../context/WalletContext.jsx';
 import { useState, useEffect, useCallback } from 'react';
 import {
   Search,
@@ -25,7 +27,7 @@ export default function AssetRequest({ onNavigateToDecision }) {
     setIsComputing,
     showToast,
   } = useAccessRequest();
-
+	
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
