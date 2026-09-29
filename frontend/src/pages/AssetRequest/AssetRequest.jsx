@@ -1,6 +1,5 @@
-
 /* eslint-disable react-hooks/set-state-in-effect */
-import { useWallet } from '../../context/WalletContext.jsx';
+import { useWallet } from '../../context/WalletContext';
 import { useState, useEffect, useCallback } from 'react';
 import {
   Search,
@@ -17,7 +16,9 @@ import { getAssets, computeRisk } from '../../services/mockApi';
 import ClassificationBadge from '../../components/ClassificationBadge';
 import { useAccessRequest } from '../../context/AccessRequestContext';
 
+
 export default function AssetRequest({ onNavigateToDecision }) {
+  const { address } = useWallet();
   const {
     selectedAsset,
     setSelectedAsset,
@@ -27,7 +28,7 @@ export default function AssetRequest({ onNavigateToDecision }) {
     setIsComputing,
     showToast,
   } = useAccessRequest();
-	
+
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -75,6 +76,17 @@ export default function AssetRequest({ onNavigateToDecision }) {
 
   const handleInitiateAccessRequest = async (assetToRequest) => {
     const targetAsset = assetToRequest || selectedAsset;
+    const decision = await computeRisk({
+      asset: targetAsset,
+      location: contextTelemetry.location,
+      deviceStatus: contextTelemetry.deviceStatus,
+      accessTime: contextTelemetry.accessTime,
+      purpose: contextTelemetry.purpose,
+      requesterDID: address === 'dev-user'
+        ? 'did:fabric:eng-a41f9c'
+        : address
+    });
+    
     if (!targetAsset) {
       showToast('Please select an asset first', 'error');
       return;

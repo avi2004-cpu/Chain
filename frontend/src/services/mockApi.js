@@ -61,15 +61,9 @@ export async function computeRisk({ asset, location, deviceStatus, accessTime, r
   const data = await apiFetch(`/access/request`, { method: "POST", body: JSON.stringify(body) });
   lastTxHash = data.txHash || null;
 
-  const factors = Object.entries(data.factors).map(([key, value]) => {
-    const max = FACTOR_MAX[key] ?? 30;
-    return {
-      name: FACTOR_NAME[key] ?? key,
-      weight: max,
-      riskScore: Math.round((value / max) * 10),
-      weighted: value,
-    };
-  });
+  const factors = Array.isArray(data.factors)
+    ? data.factors
+    : [];
 
   return {
     outcome: OUTCOME_MAP[data.outcome] ?? "Allow",
