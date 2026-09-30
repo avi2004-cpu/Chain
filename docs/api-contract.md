@@ -69,9 +69,9 @@ Response:
 Response: array of assets (same shape as `GET /assets/:id`).
 
 ## POST /access/request
-Scores the request with the risk engine, then logs the decision to the
-access-control chaincode. The response is only sent once the log
-transaction has been **committed** to the ledger.
+**Risk evaluation only. No ledger transaction is created and no `txHash` is returned.**
+The requester (when `requesterAddress` is given) is checked against the identity
+chaincode; an unregistered or unverifiable address is **BLOCKed** (fails closed).
 
 Request:
 ```json
@@ -86,10 +86,9 @@ Request:
   "requiresMultiSig": false
 }
 ```
-`requesterAddress` is optional. When present it is checked against the
-identity chaincode; an unregistered (or unverifiable) address is
-**BLOCKed** (fails closed). `classification` must be one of `Public`,
-`Internal`, `Confidential`, `Restricted`.
+`assetId`, `requesterDID` and `classification` are required. `classification` must
+be one of `Public`, `Internal`, `Confidential`, `Restricted`. `requesterAddress`
+must match the ledger key exactly (case-sensitive).
 
 Response:
 ```json
@@ -108,15 +107,42 @@ Response:
   "anomalies": [],
   "identity": { "registered": true, "role": null },
   "asset": { "classification": "Confidential", "ownerDID": null },
-  "requiresMultiSig": false,
+  "requiresMultiSig": false
+}
+```
+`outcome` is one of `ALLOW`, `STEP_UP`, `BLOCK`. `factors` is an array (the
+frontend `FactorBar` renders it directly).
+
+Errors: `400` missing/invalid field, `500` gateway failure.
+
+## POST /access/decision
+Commits the user's final decision to Fabric (`LogDecision`). The backend
+**recomputes risk from the request body** and never trusts a client-supplied
+score, so send the same body as `/access/request` plus `action`.
+
+Request: the `/access/request` body plus
+```json
+{ "action": "ALLOW" }
+```
+`action` is `ALLOW` or `DECLINE`.
+
+Response (only after the transaction is **committed**):
+```json
+{
+  "success": true,
+  "action": "ALLOW",
+  "outcome": "ALLOW",
+  "score": 22,
   "txHash": "<fabric transaction id>"
 }
 ```
-`outcome` is one of `ALLOW`, `STEP_UP`, `BLOCK`. `factors` is an array
-(the frontend `FactorBar` renders it directly).
-
-Errors: `400` missing/invalid field, `502` transaction endorsed but not
-committed (body includes `txHash`), `500` Fabric/gateway failure.
+Rules and errors:
+- `ALLOW` is only accepted when the recomputed outcome is `ALLOW`. Otherwise
+  **`403`** `{ "error": "Allow denied: risk outcome is STEP_UP", "outcome", "score", ... }`.
+  There is currently no way to turn a `STEP_UP` into an allow.
+- `DECLINE` is accepted for any outcome.
+- `400` missing/invalid field or bad `action`; `502` endorsed but not committed
+  (body includes `txHash`); `500` gateway failure.
 
 ## GET /access/logs
 Response: array, most recent first
@@ -133,8 +159,9 @@ Response: array, most recent first
   }
 ]
 ```
-The ledger stores `allowed` only, so `STEP_UP` and `BLOCK` both appear
-as `allowed: false`.
+The ledger stores `allowed` and `riskScore` only, so `STEP_UP`, `BLOCK` and a
+user `DECLINE` all appear as `allowed: false`. Clients derive a label from
+`riskScore` against the thresholds (block >= 70, step-up >= 40).
 
 ## GET /health
 Response: `{ "status": "ok" }` (does not touch Fabric).

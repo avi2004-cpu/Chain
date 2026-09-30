@@ -22,6 +22,7 @@ function fmtDate(iso) {
   );
 }
 function shortHash(h) {
+  if (typeof h !== "string" || h.length === 0) return "—";
   return h.length > 14 ? h.slice(0, 6) + "…" + h.slice(-4) : h;
 }
 
@@ -65,6 +66,7 @@ export default function AuditLog() {
   };
 
   const copyHash = (hash) => {
+    if (!hash) return;
     navigator.clipboard?.writeText(hash).then(() => showToast("Transaction hash copied", "success"));
   };
 
@@ -247,6 +249,7 @@ export default function AuditLog() {
               <div className="detail-row"><div className="detail-k">Asset</div><div className="detail-v mono">{activeRow.assetId}</div></div>
               <div className="detail-row"><div className="detail-k">Classification</div><div className="detail-v">{activeRow.classification}</div></div>
               <div className="detail-row"><div className="detail-k">Decision</div><div className="detail-v"><span className={`badge ${activeRow.outcome}`}>{activeRow.outcome}</span></div></div>
+              <div className="detail-row"><div className="detail-k">Risk score</div><div className="detail-v mono">{activeRow.riskScore ?? "—"}</div></div>
               <div className="detail-row"><div className="detail-k">Timestamp</div><div className="detail-v mono">{fmtDate(activeRow.timestamp)}</div></div>
               <div className="detail-row"><div className="detail-k">Transaction</div><div className="detail-v mono">{activeRow.txHash}</div></div>
             </div>

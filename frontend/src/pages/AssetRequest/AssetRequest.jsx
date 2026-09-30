@@ -12,22 +12,28 @@ import {
   ChevronRight,
   X,
 } from 'lucide-react';
-import { getAssets, computeRisk } from '../../services/mockApi';
+import { getAssets } from '../../services/mockApi';
 import ClassificationBadge from '../../components/ClassificationBadge';
 import { useAccessRequest } from '../../context/AccessRequestContext';
 
+// Optional chain fields must never crash a render: only slice real, non-empty strings.
+function formatHash(hash, len = 26) {
+  if (typeof hash !== 'string' || hash.length === 0) return 'Not available';
+  return hash.length > len ? `${hash.slice(0, len)}...` : hash;
+}
 
 export default function AssetRequest({ onNavigateToDecision }) {
   const { address, did } = useWallet();
   const {
-    selectedAsset,
-    setSelectedAsset,
     contextTelemetry,
     setContextTelemetry,
-    setActiveDecision,
-    setIsComputing,
+    runEvaluation,
     showToast,
   } = useAccessRequest();
+
+  // The details drawer is local to this page. (The evaluated asset lives in the
+  // shared context, so returning here doesn't reopen the previous asset's drawer.)
+  const [drawerAsset, setDrawerAsset] = useState(null);
 
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +43,6 @@ export default function AssetRequest({ onNavigateToDecision }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedClassification, setSelectedClassification] = useState('ALL');
 
-  // Active detail drawer asset
   const [submitting, setSubmitting] = useState(false);
 
   const loadData = useCallback(async () => {
@@ -71,40 +76,31 @@ export default function AssetRequest({ onNavigateToDecision }) {
   };
 
   const handleSelectAsset = (asset) => {
-    setSelectedAsset(asset);
+    setDrawerAsset(asset);
   };
 
   const handleInitiateAccessRequest = async (assetToRequest) => {
-    const targetAsset = assetToRequest || selectedAsset;
+    const targetAsset = assetToRequest || drawerAsset;
 
     if (!targetAsset) {
       showToast('Please select an asset first', 'error');
       return;
     }
 
+    setSubmitting(true);
+    setDrawerAsset(null);
+
+    // Go to the Risk Decision screen straight away; it shows a loading state until
+    // the backend answers (or an error state if it doesn't). The evaluation itself
+    // is POST /access/request via the shared context.
+    onNavigateToDecision();
     try {
-      setSubmitting(true);
-      setIsComputing(true);
-      setSelectedAsset(targetAsset);
-
-      // Transition to Risk Decision screen right away to display the loading evaluation animation
-      onNavigateToDecision();
-
-      // Compute zero-trust risk score in mock service
-      const decision = await computeRisk({
+      await runEvaluation({
         asset: targetAsset,
-        location: contextTelemetry.location,
-        deviceStatus: contextTelemetry.deviceStatus,
-        accessTime: contextTelemetry.accessTime,
-        purpose: contextTelemetry.purpose,
+        telemetry: contextTelemetry,
         requesterDID: did || address,
         requesterAddress: address,
       });
-
-      setActiveDecision(decision);
-    } catch (err) {
-      showToast(err.message || 'Risk computation failed', 'error');
-      setIsComputing(false);
     } finally {
       setSubmitting(false);
     }
@@ -353,7 +349,7 @@ export default function AssetRequest({ onNavigateToDecision }) {
           </div>
 
           {assets.map((asset) => {
-            const isSelected = selectedAsset?.id === asset.id;
+            const isSelected = drawerAsset?.id === asset.id;
             return (
               <div
                 key={asset.id}
@@ -420,30 +416,30 @@ export default function AssetRequest({ onNavigateToDecision }) {
       )}
 
       {/* Selected Asset Drawer */}
-      {selectedAsset && (
+      {drawerAsset && (
         <>
-          <div className="overlay show" onClick={() => setSelectedAsset(null)} />
+          <div className="overlay show" onClick={() => setDrawerAsset(null)} />
           <aside className="drawer glass-floating show" role="dialog" aria-modal="true" aria-label="Selected asset details">
             <div className="drawer-head">
               <div>
                 <div className="drawer-eyebrow">Selected Asset</div>
-                <div className="drawer-title">{selectedAsset.name}</div>
+                <div className="drawer-title">{drawerAsset.name}</div>
               </div>
-              <button className="drawer-close" aria-label="Close selected asset details" onClick={() => setSelectedAsset(null)}>
+              <button className="drawer-close" aria-label="Close selected asset details" onClick={() => setDrawerAsset(null)}>
                 <X size={16} />
               </button>
             </div>
             <div className="drawer-body">
-              <div className="detail-row"><div className="detail-k">Asset ID</div><div className="detail-v mono">{selectedAsset.id}</div></div>
-              <div className="detail-row"><div className="detail-k">Classification</div><div className="detail-v"><ClassificationBadge classification={selectedAsset.classification} /></div></div>
-              <div className="detail-row"><div className="detail-k">Organization</div><div className="detail-v">{selectedAsset.unit}</div></div>
-              <div className="detail-row"><div className="detail-k">Format</div><div className="detail-v">{selectedAsset.format}</div></div>
-              <div className="detail-row"><div className="detail-k">Size</div><div className="detail-v">{selectedAsset.size}</div></div>
-              <div className="detail-row"><div className="detail-k">SHA-256 Hash</div><div className="detail-v mono">{selectedAsset.hash.slice(0, 26)}...</div></div>
+              <div className="detail-row"><div className="detail-k">Asset ID</div><div className="detail-v mono">{drawerAsset.id}</div></div>
+              <div className="detail-row"><div className="detail-k">Classification</div><div className="detail-v"><ClassificationBadge classification={drawerAsset.classification} /></div></div>
+              <div className="detail-row"><div className="detail-k">Organization</div><div className="detail-v">{drawerAsset.unit}</div></div>
+              <div className="detail-row"><div className="detail-k">Format</div><div className="detail-v">{drawerAsset.format}</div></div>
+              <div className="detail-row"><div className="detail-k">Size</div><div className="detail-v">{drawerAsset.size}</div></div>
+              <div className="detail-row"><div className="detail-k">SHA-256 Hash</div><div className="detail-v mono">{formatHash(drawerAsset.hash)}</div></div>
             </div>
             <div className="drawer-foot">
               <button
-                onClick={() => handleInitiateAccessRequest(selectedAsset)}
+                onClick={() => handleInitiateAccessRequest(drawerAsset)}
                 disabled={submitting}
                 className="btn-primary asset-drawer-submit"
               >

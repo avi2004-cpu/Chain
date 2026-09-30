@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useCallback, useRef } from "react";
+import { computeRisk } from "../services/mockApi.js";
 
 // Shared state across AssetRequest -> RiskDecision: the asset the user is
 // requesting, the zero-trust telemetry inputs, the computed decision, and
@@ -21,6 +22,9 @@ export function AccessRequestProvider({ children }) {
   const [contextTelemetry, setContextTelemetry] = useState(DEFAULT_TELEMETRY);
   const [activeDecision, setActiveDecision] = useState(null);
   const [isComputing, setIsComputing] = useState(false);
+  const [decisionError, setDecisionError] = useState(null); // string | null - evaluation failed
+  const [commitResult, setCommitResult] = useState(null); // { txHash, action, ... } once committed to Fabric
+  const evalSeq = useRef(0); // guards against a slow earlier response overwriting a newer one
 
   const [toast, setToast] = useState(null); // { message, type, show }
   const hideTimer = useRef(null);
@@ -39,6 +43,33 @@ export function AccessRequestProvider({ children }) {
     }, 2400);
   }, []);
 
+  // One code path for "evaluate this asset" (used by AssetRequest and by Retry).
+  // Clears any previous decision first so a stale result can never be shown for a
+  // new request, and never substitutes a default outcome on failure.
+  const runEvaluation = useCallback(async ({ asset, telemetry, requesterDID, requesterAddress }) => {
+    const token = ++evalSeq.current;
+    setSelectedAsset(asset);
+    setActiveDecision(null);
+    setDecisionError(null);
+    setCommitResult(null);
+    setIsComputing(true);
+    try {
+      const decision = await computeRisk({
+        asset,
+        location: telemetry.location,
+        deviceStatus: telemetry.deviceStatus,
+        accessTime: telemetry.accessTime,
+        requesterDID,
+        requesterAddress,
+      });
+      if (token === evalSeq.current) setActiveDecision(decision);
+    } catch (err) {
+      if (token === evalSeq.current) setDecisionError(err?.message || "Risk evaluation failed.");
+    } finally {
+      if (token === evalSeq.current) setIsComputing(false);
+    }
+  }, []);
+
   return (
     <AccessRequestContext.Provider
       value={{
@@ -50,6 +81,10 @@ export function AccessRequestProvider({ children }) {
         setActiveDecision,
         isComputing,
         setIsComputing,
+        decisionError,
+        commitResult,
+        setCommitResult,
+        runEvaluation,
         showToast,
       }}
     >

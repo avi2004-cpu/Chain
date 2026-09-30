@@ -202,7 +202,7 @@ function Identities() {
             <div className="irow" key={r.address}>
               <span className="asset-cell" style={{ color: "var(--text)" }}>{r.did}</span>
               <span>{r.role}</span>
-              <span className="mono" title={r.address}>{r.address.length > 16 ? `${r.address.slice(0, 8)}…${r.address.slice(-6)}` : r.address}</span>
+              <span className="mono" title={r.address}>{String(r.address ?? "").length > 16 ? `${r.address.slice(0, 8)}…${r.address.slice(-6)}` : (r.address ?? "—")}</span>
             </div>
           ))}
         </div>

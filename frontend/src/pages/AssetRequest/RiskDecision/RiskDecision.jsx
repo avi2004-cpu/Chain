@@ -13,20 +13,25 @@ import {
   RefreshCw,
   Building2,
   Lock,
+  AlertTriangle,
 } from 'lucide-react';
 import RiskGauge from '../../../components/RiskGauge';
 import FactorBar from '../../../components/FactorBar';
 import ClassificationBadge from '../../../components/ClassificationBadge';
 import { useAccessRequest } from '../../../context/AccessRequestContext';
 import { useWallet } from '../../../context/WalletContext';
-import { signStepUpChallenge, logDecision } from '../../../services/mockApi';
+import { signStepUpChallenge, commitDecision } from '../../../services/mockApi';
 
 export default function RiskDecision({ onNavigateToRequest }) {
   const {
     selectedAsset,
     activeDecision,
     isComputing,
-    setIsComputing,
+    decisionError,
+    commitResult,
+    setCommitResult,
+    contextTelemetry,
+    runEvaluation,
     showToast,
   } = useAccessRequest();
   const { address, did } = useWallet();
@@ -40,57 +45,78 @@ export default function RiskDecision({ onNavigateToRequest }) {
   }, [selectedAsset, isComputing, onNavigateToRequest, showToast]);
 
   // Step-Up Wallet Signature States: 'idle' | 'signing' | 'signed' | 'error'
+  // NOTE: the step-up signature and multi-org approvals below are SIMULATED UI only.
   const [signStatus, setSignStatus] = useState('idle');
   const [signatureProof, setSignatureProof] = useState(null);
   const [signError, setSignError] = useState(null);
 
-  // Multi-Org Endorsement States (for Restricted assets)
+  // Multi-Org Endorsement States (for Restricted assets) - simulated
   const [approvedOrgs, setApprovedOrgs] = useState(['BEL Admin Org']);
   const requiredOrgs = ['BEL Admin Org', 'Military Security Org'];
 
-  // Decision logging state
-  const [isLogged, setIsLogged] = useState(false);
-  const [loggedTxHash, setLoggedTxHash] = useState(null);
-  const [copiedKey, setCopiedKey] = useState(false);
+  // Final decision commit (POST /access/decision)
+  const [committing, setCommitting] = useState(null); // 'ALLOW' | 'DECLINE' | null
+  const [commitError, setCommitError] = useState(null);
+  const [copiedTx, setCopiedTx] = useState(false);
 
-  // Simulated computation steps during loading state
+  // Cosmetic progress ticks while waiting. They do NOT decide when loading ends -
+  // that is driven only by the real request in the shared context.
   const [loadingStep, setLoadingStep] = useState(0);
 
   useEffect(() => {
-    if (isComputing) {
-      setLoadingStep(1);
-      const t1 = setTimeout(() => setLoadingStep(2), 250);
-      const t2 = setTimeout(() => setLoadingStep(3), 500);
-      const t3 = setTimeout(() => {
-        setIsComputing(false);
-      }, 750);
+    if (!isComputing) return undefined;
+    setLoadingStep(1);
+    const t1 = setTimeout(() => setLoadingStep(2), 250);
+    return () => clearTimeout(t1);
+  }, [isComputing]);
 
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-        clearTimeout(t3);
-      };
-    }
-  }, [isComputing, setIsComputing]);
-
-  // Automatically log decision to Fabric ledger when outcome settles
+  // Reset per-request UI state whenever a new decision arrives or is cleared.
   useEffect(() => {
-    if (activeDecision && !isLogged && !isComputing && selectedAsset) {
-      logDecision({
-        assetId: selectedAsset.id,
-        classification: selectedAsset.classification,
-        score: activeDecision.calculatedScore,
-        outcome: activeDecision.outcome,
-        requester: did || address,
-        endorsement: selectedAsset.classification === 'Restricted' ? 'Multi-Org Pending' : 'Approved',
-      }).then((res) => {
-        setIsLogged(true);
-        setLoggedTxHash(res.txHash);
-      });
-    }
-  }, [activeDecision, isComputing, isLogged, selectedAsset, did, address]);
+    setSignStatus('idle');
+    setSignatureProof(null);
+    setSignError(null);
+    setApprovedOrgs(['BEL Admin Org']);
+    setCommitError(null);
+    setCommitting(null);
+    setCopiedTx(false);
+  }, [activeDecision]);
 
-  // Handle Step-Up Cryptographic Signature
+  const handleRetry = () => {
+    runEvaluation({
+      asset: selectedAsset,
+      telemetry: contextTelemetry,
+      requesterDID: did || address,
+      requesterAddress: address,
+    });
+  };
+
+  // Record the final decision on Fabric. Only an id returned by the backend is ever shown.
+  const handleCommit = async (action) => {
+    if (!activeDecision || committing || commitResult) return;
+    setCommitting(action);
+    setCommitError(null);
+    try {
+      const res = await commitDecision({ request: activeDecision.request, action });
+      setCommitResult(res);
+      showToast(action === 'ALLOW' ? 'Access decision committed to Fabric' : 'Denial committed to Fabric');
+    } catch (err) {
+      const msg = err?.message || 'Could not commit the decision';
+      setCommitError(msg);
+      showToast(msg, 'error');
+    } finally {
+      setCommitting(null);
+    }
+  };
+
+  const handleCopyTx = () => {
+    if (!commitResult?.txHash) return;
+    navigator.clipboard?.writeText(commitResult.txHash)?.catch(() => {});
+    setCopiedTx(true);
+    showToast('Transaction ID copied');
+    setTimeout(() => setCopiedTx(false), 2000);
+  };
+
+  // Handle Step-Up Cryptographic Signature (simulated)
   const handleSign = async () => {
     try {
       setSignStatus('signing');
@@ -102,7 +128,7 @@ export default function RiskDecision({ onNavigateToRequest }) {
       });
       setSignStatus('signed');
       setSignatureProof(res);
-      showToast('Wallet signed successfully. Identity challenge verified.', 'success');
+      showToast('Simulated wallet challenge completed (not verified by the backend).', 'info');
     } catch (err) {
       setSignStatus('error');
       setSignError(err.message || 'Signature rejected by wallet');
@@ -113,17 +139,37 @@ export default function RiskDecision({ onNavigateToRequest }) {
   // Simulate Multi-Org Endorsement approval
   const handleApproveOrg = (org) => {
     if (!approvedOrgs.includes(org)) {
-      const updated = [...approvedOrgs, org];
-      setApprovedOrgs(updated);
-      showToast(`${org} endorsement signature committed to Fabric ledger!`);
+      setApprovedOrgs([...approvedOrgs, org]);
+      showToast(`${org} endorsement simulated (UI only, not written to Fabric).`, 'info');
     }
   };
 
-  const handleCopyKey = () => {
-    setCopiedKey(true);
-    showToast('Ephemeral AES-256 decryption key copied to clipboard');
-    setTimeout(() => setCopiedKey(false), 2000);
-  };
+  // Ledger confirmation / error line, shared by all three outcome panels.
+  const ledgerStatus = (
+    <>
+      {commitResult && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11.5px', color: 'var(--text-dim)', flexWrap: 'wrap', marginTop: '12px' }}>
+          <FileCheck2 size={14} color="var(--allow)" />
+          <span>
+            {commitResult.action === 'ALLOW' ? 'Allow' : 'Decline'} committed to Hyperledger Fabric. Transaction ID:
+          </span>
+          <span className="mono" style={{ color: 'var(--accent-strong)', wordBreak: 'break-all' }}>
+            {commitResult.txHash}
+          </span>
+          <button onClick={handleCopyTx} className="btn-secondary" style={{ padding: '2px 8px', fontSize: '11px' }}>
+            {copiedTx ? <Check size={12} color="var(--allow)" /> : <Copy size={12} />}
+            <span>{copiedTx ? 'Copied' : 'Copy'}</span>
+          </button>
+        </div>
+      )}
+      {commitError && !commitResult && (
+        <div role="alert" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: 'var(--block)', marginTop: '12px' }}>
+          <AlertTriangle size={14} style={{ flexShrink: 0, marginTop: '1px' }} />
+          <span>Not recorded on the ledger: {commitError}</span>
+        </div>
+      )}
+    </>
+  );
 
   // If no asset is present, redirect view returns placeholder while useEffect redirects
   if (!selectedAsset) {
@@ -141,14 +187,14 @@ export default function RiskDecision({ onNavigateToRequest }) {
     );
   }
 
-  // 1. Loading State while risk is computed
+  // 1. Loading State while the backend evaluates the request
   if (isComputing) {
     return (
       <div className="main-content">
         <div className="page-head">
           <div>
             <h1 className="page-title">Evaluating Zero-Trust Security Policies</h1>
-            <p className="page-desc">Running real-time Fabric chaincode verification & risk calculation...</p>
+            <p className="page-desc">Waiting for the backend risk engine...</p>
           </div>
         </div>
 
@@ -158,22 +204,21 @@ export default function RiskDecision({ onNavigateToRequest }) {
           </div>
 
           <h3 style={{ fontSize: '16px', fontWeight: 600, marginBottom: '8px', color: 'var(--text)' }}>
-            Processing Cryptographic Authorization
+            Processing Authorization Request
           </h3>
           <p style={{ color: 'var(--text-dim)', fontSize: '13px', marginBottom: '24px', maxWidth: '50ch', margin: '0 auto 24px' }}>
-            Evaluating asset <span className="mono" style={{ color: 'var(--text)', fontWeight: 600 }}>{selectedAsset.id}</span> against Fabric endorsement policies and anomaly scoring.
+            Evaluating asset <span className="mono" style={{ color: 'var(--text)', fontWeight: 600 }}>{selectedAsset.id}</span> against the requester's identity and access context.
           </p>
 
-          {/* Stepper Visualizer */}
           <div style={{ maxWidth: '420px', margin: '0 auto', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: loadingStep >= 1 ? 'var(--allow)' : 'var(--text-faint)' }}>
-              <Check size={14} /> Validating Fabric DID certificate chain...
+              <Check size={14} /> Request sent to ChainGuard backend
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: loadingStep >= 2 ? 'var(--allow)' : 'var(--text-faint)' }}>
-              <Check size={14} /> Inspecting telemetry: IP, location, & FIDO2 token...
+              <Check size={14} /> Checking requester identity on the ledger
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: loadingStep >= 3 ? 'var(--allow)' : 'var(--text-faint)' }}>
-              <Check size={14} /> Computing Bayesian risk score across BEL security rules...
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12px', color: 'var(--text-faint)' }}>
+              <Clock size={14} /> Scoring risk factors...
             </div>
           </div>
         </div>
@@ -181,8 +226,37 @@ export default function RiskDecision({ onNavigateToRequest }) {
     );
   }
 
-  const outcome = activeDecision?.outcome || 'Allow';
-  const score = activeDecision?.calculatedScore || 24;
+  // 2. The evaluation failed. Fail closed: never show a default Allow.
+  if (decisionError || !activeDecision) {
+    return (
+      <div className="main-content">
+        <div className="page-head">
+          <div>
+            <button
+              onClick={onNavigateToRequest}
+              className="btn-secondary"
+              style={{ marginBottom: '10px', padding: '4px 8px', fontSize: '11px' }}
+            >
+              <ArrowLeft size={13} />
+              Back to Asset Request
+            </button>
+            <h1 className="page-title">Risk Decision & Cryptographic Clearance</h1>
+          </div>
+        </div>
+        <div className="error-state" role="alert">
+          <AlertTriangle size={36} color="var(--block)" style={{ marginBottom: '10px' }} />
+          <div className="error-title">Access was not evaluated. No access has been granted.</div>
+          <div className="error-msg">{decisionError || 'No risk decision is available for this request.'}</div>
+          <button onClick={handleRetry} className="btn-primary">
+            Retry Evaluation
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const outcome = activeDecision.outcome;
+  const score = activeDecision.calculatedScore;
   const isRestricted = selectedAsset.classification === 'Restricted';
   const isMultiOrgComplete = approvedOrgs.length >= requiredOrgs.length;
 
@@ -242,7 +316,7 @@ export default function RiskDecision({ onNavigateToRequest }) {
               textAlign: 'center'
             }}
           >
-            Policy Engine: <strong style={{ color: 'var(--text)' }}>ZeroTrust-v2.5 (Bayesian)</strong>
+            Policy Engine: <strong style={{ color: 'var(--text)' }}>ChainGuard weighted risk model</strong>
           </div>
         </div>
 
@@ -260,7 +334,7 @@ export default function RiskDecision({ onNavigateToRequest }) {
             </span>
           </div>
 
-          <FactorBar factors={activeDecision?.factors} />
+          <FactorBar factors={activeDecision.factors} />
         </div>
       </div>
 
@@ -295,55 +369,47 @@ export default function RiskDecision({ onNavigateToRequest }) {
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                 <h3 style={{ fontSize: '16px', fontWeight: 700, color: 'var(--text)' }}>
-                  Access Granted — Risk Score Within Acceptable Threshold
+                  {commitResult?.action === 'ALLOW'
+                    ? 'Access Granted — Decision Recorded on Fabric'
+                    : commitResult
+                      ? 'Request Declined — Recorded on Fabric'
+                      : 'Risk Check Passed — Confirm to Record the Decision'}
                 </h3>
                 <span className="badge Allow">Allow</span>
               </div>
               <p style={{ color: 'var(--text-dim)', fontSize: '13px', marginBottom: '16px', maxWidth: '75ch' }}>
-                Your identity DID and workstation telemetry meet all clearance requirements for{' '}
-                <strong style={{ color: 'var(--text)' }}>{selectedAsset.name}</strong>. An ephemeral access token has been generated.
+                {activeDecision.reason || 'All risk factors are within acceptable thresholds.'}{' '}
+                Request for <strong style={{ color: 'var(--text)' }}>{selectedAsset.name}</strong> scored{' '}
+                <strong style={{ color: 'var(--allow)' }}>{score}</strong>.
               </p>
 
-              {/* Ephemeral Access Token Box */}
-              <div
-                style={{
-                  background: 'var(--surface-2)',
-                  border: '1px solid var(--border)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '12px 16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '12px',
-                  flexWrap: 'wrap',
-                  marginBottom: '16px'
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '10px', textTransform: 'uppercase', color: 'var(--text-faint)', fontWeight: 600 }}>
-                    Ephemeral Decryption Key (Valid for 4 Hours)
-                  </div>
-                  <div className="mono" style={{ fontSize: '12px', color: 'var(--text)', fontWeight: 600 }}>
-                    key_aes256_gcm_99a81c03df99e4b771a0
-                  </div>
-                </div>
-
-                <button onClick={handleCopyKey} className="btn-secondary" style={{ padding: '6px 12px' }}>
-                  {copiedKey ? <Check size={13} color="var(--allow)" /> : <Copy size={13} />}
-                  <span>{copiedKey ? 'Copied!' : 'Copy Key'}</span>
-                </button>
-              </div>
-
-              {/* Fabric Immutable Ledger Confirmation */}
-              {isLogged && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11.5px', color: 'var(--text-dim)' }}>
-                  <FileCheck2 size={14} color="var(--allow)" />
-                  <span>Committed to Hyperledger Fabric:</span>
-                  <span className="mono" style={{ color: 'var(--accent-strong)' }}>
-                    {loggedTxHash?.slice(0, 32)}...
-                  </span>
+              {!commitResult && (
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    onClick={() => handleCommit('ALLOW')}
+                    disabled={Boolean(committing)}
+                    className="btn-primary"
+                    style={{ padding: '7px 14px' }}
+                  >
+                    <ShieldCheck size={14} />
+                    {committing === 'ALLOW' ? 'Committing to Fabric...' : 'Confirm & Record ALLOW on Fabric'}
+                  </button>
+                  <button
+                    onClick={() => handleCommit('DECLINE')}
+                    disabled={Boolean(committing)}
+                    className="btn-secondary"
+                    style={{ padding: '7px 14px' }}
+                  >
+                    {committing === 'DECLINE' ? 'Committing to Fabric...' : 'Decline & Record'}
+                  </button>
                 </div>
               )}
+
+              {ledgerStatus}
+
+              <p style={{ fontSize: '11px', color: 'var(--text-faint)', marginTop: '14px', maxWidth: '75ch' }}>
+                This records the authorization decision on the ledger. Off-chain document release is not connected in this build.
+              </p>
             </div>
           </div>
         </div>
@@ -400,37 +466,37 @@ export default function RiskDecision({ onNavigateToRequest }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Key size={16} color="var(--stepup)" />
                     <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
-                      Hardware / Wallet Challenge (FIDO2 / MetaMask)
+                      Hardware / Wallet Challenge (FIDO2 / MetaMask) — simulated
                     </span>
                   </div>
                   {signStatus === 'signed' && (
                     <span className="badge Allow" style={{ background: 'var(--allow-soft)', color: 'var(--allow)' }}>
-                      Signature Verified
+                      Simulated
                     </span>
                   )}
                 </div>
 
                 <p style={{ fontSize: '12px', color: 'var(--text-dim)', marginBottom: '12px' }}>
-                  Sign payload <code className="mono">0x448a...92b</code> to prove live physical presence on this terminal.
+                  Demo only: this step does not yet produce a signature the backend can verify.
                 </p>
 
                 {signStatus === 'idle' && (
                   <button onClick={handleSign} className="btn-primary" style={{ background: 'var(--stepup)' }}>
                     <Fingerprint size={14} />
-                    Sign Challenge with Wallet
+                    Run Simulated Challenge
                   </button>
                 )}
 
                 {signStatus === 'signing' && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '12.5px', color: 'var(--stepup)' }}>
                     <RefreshCw size={14} className="spin" style={{ animation: 'spin 1.2s linear infinite' }} />
-                    <span>Waiting for user signature in wallet extension...</span>
+                    <span>Running simulated challenge...</span>
                   </div>
                 )}
 
                 {signStatus === 'signed' && (
                   <div style={{ fontSize: '11.5px', color: 'var(--text-dim)' }}>
-                    Signature committed:{' '}
+                    Simulated signature (not verified):{' '}
                     <span className="mono" style={{ color: 'var(--text)', fontWeight: 600 }}>
                       {signatureProof?.signature}
                     </span>
@@ -470,7 +536,7 @@ export default function RiskDecision({ onNavigateToRequest }) {
                   </div>
 
                   <p style={{ fontSize: '12px', color: 'var(--text-dim)', marginBottom: '12px' }}>
-                    Because this asset is classified as <strong style={{ color: 'var(--text)' }}>Restricted</strong>, Fabric policy requires endorsement by both BEL Admin Org and Military Security Org.
+                    Because this asset is classified as <strong style={{ color: 'var(--text)' }}>Restricted</strong>, Fabric policy requires endorsement by both BEL Admin Org and Military Security Org. The approvals below are a UI simulation and are not written to Fabric.
                   </p>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -496,7 +562,7 @@ export default function RiskDecision({ onNavigateToRequest }) {
 
                           {isApproved ? (
                             <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--allow)' }}>
-                              Endorsed on Fabric
+                              Endorsed (simulated)
                             </span>
                           ) : (
                             <button
@@ -513,16 +579,30 @@ export default function RiskDecision({ onNavigateToRequest }) {
                   </div>
 
                   {isMultiOrgComplete && signStatus === 'signed' && (
-                    <div style={{ marginTop: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span className="badge Endorsed">Endorsement Complete</span>
-                      <button onClick={handleCopyKey} className="btn-primary" style={{ padding: '6px 12px' }}>
-                        <Copy size={13} />
-                        Retrieve Decrypted Payload
-                      </button>
+                    <div style={{ marginTop: '14px' }}>
+                      <span className="badge Endorsed">Simulated Endorsement Complete</span>
                     </div>
                   )}
                 </div>
               )}
+
+              <div style={{ marginTop: '16px' }}>
+                <p style={{ fontSize: '12px', color: 'var(--text-dim)', marginBottom: '10px', maxWidth: '75ch' }}>
+                  The backend re-scores every request when a decision is recorded and refuses ALLOW for a Step-Up outcome,
+                  so completing step-up cannot grant access yet. You can record this request as declined.
+                </p>
+                {!commitResult && (
+                  <button
+                    onClick={() => handleCommit('DECLINE')}
+                    disabled={Boolean(committing)}
+                    className="btn-secondary"
+                    style={{ padding: '7px 14px' }}
+                  >
+                    {committing === 'DECLINE' ? 'Committing to Fabric...' : 'Decline & Record on Fabric'}
+                  </button>
+                )}
+                {ledgerStatus}
+              </div>
             </div>
           </div>
         </div>
@@ -562,7 +642,7 @@ export default function RiskDecision({ onNavigateToRequest }) {
                 <span className="badge Block">Block</span>
               </div>
               <p style={{ color: 'var(--text-dim)', fontSize: '13px', marginBottom: '16px', maxWidth: '75ch' }}>
-                Your request received a risk index of <strong style={{ color: 'var(--block)' }}>{score}</strong>, exceeding the maximum permissible threshold for this clearance tier. Access has been blocked automatically.
+                Your request received a risk index of <strong style={{ color: 'var(--block)' }}>{score}</strong>, exceeding the maximum permissible threshold for this clearance tier. Access is denied.
               </p>
 
               <div
@@ -575,27 +655,26 @@ export default function RiskDecision({ onNavigateToRequest }) {
                 }}
               >
                 <div style={{ fontSize: '11.5px', fontWeight: 600, color: 'var(--block)', marginBottom: '6px' }}>
-                  Risk Violations Flagged:
+                  Reported by the risk engine:
                 </div>
                 <ul style={{ paddingLeft: '18px', fontSize: '12px', color: 'var(--text-dim)', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <li>Untrusted network origin detected outside designated secure perimeter.</li>
-                  <li>Terminal lacks hardware cryptographic attestation module (TPM 2.0 / FIDO2).</li>
-                  <li>Requested clearance level exceeds verified role credentials.</li>
+                  {activeDecision.anomalies.length > 0
+                    ? activeDecision.anomalies.map((a) => <li key={a}>{a}</li>)
+                    : <li>{activeDecision.reason || 'Risk score exceeds the permitted access threshold.'}</li>}
                 </ul>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div className="mono" style={{ fontSize: '11px', color: 'var(--text-dim)' }}>
-                  Security Incident Ref: <span style={{ color: 'var(--text)', fontWeight: 600 }}>SEC-ANOMALY-9921</span>
-                </div>
+              {!commitResult && (
                 <button
-                  onClick={() => showToast('Security incident report logged to Fabric auditor queue')}
+                  onClick={() => handleCommit('DECLINE')}
+                  disabled={Boolean(committing)}
                   className="btn-secondary"
-                  style={{ fontSize: '11px', padding: '4px 10px' }}
+                  style={{ fontSize: '12px', padding: '6px 12px' }}
                 >
-                  Notify BEL Security Operations
+                  {committing === 'DECLINE' ? 'Committing to Fabric...' : 'Record Denial on Fabric'}
                 </button>
-              </div>
+              )}
+              {ledgerStatus}
             </div>
           </div>
         </div>
