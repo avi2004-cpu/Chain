@@ -16,10 +16,11 @@ import { getAssets } from '../../services/mockApi';
 import ClassificationBadge from '../../components/ClassificationBadge';
 import { useAccessRequest } from '../../context/AccessRequestContext';
 
-// Optional chain fields must never crash a render: only slice real, non-empty strings.
-function formatHash(hash, len = 26) {
-  if (typeof hash !== 'string' || hash.length === 0) return 'Not available';
-  return hash.length > len ? `${hash.slice(0, len)}...` : hash;
+function formatSize(size) {
+  if (typeof size === 'number' && Number.isSafeInteger(size) && size >= 0) {
+    return `${size.toLocaleString()} bytes`;
+  }
+  return typeof size === 'string' && size.trim() ? size : '—';
 }
 
 export default function AssetRequest({ onNavigateToDecision }) {
@@ -371,7 +372,7 @@ export default function AssetRequest({ onNavigateToDecision }) {
                     {asset.id}
                   </div>
                   <div style={{ fontSize: '10px', color: 'var(--text-faint)' }}>
-                    {asset.size}
+                    {formatSize(asset.size)}
                   </div>
                 </div>
 
@@ -432,10 +433,11 @@ export default function AssetRequest({ onNavigateToDecision }) {
             <div className="drawer-body">
               <div className="detail-row"><div className="detail-k">Asset ID</div><div className="detail-v mono">{drawerAsset.id}</div></div>
               <div className="detail-row"><div className="detail-k">Classification</div><div className="detail-v"><ClassificationBadge classification={drawerAsset.classification} /></div></div>
-              <div className="detail-row"><div className="detail-k">Organization</div><div className="detail-v">{drawerAsset.unit}</div></div>
+              <div className="detail-row"><div className="detail-k">Organization</div><div className="detail-v">{drawerAsset.organization}</div></div>
               <div className="detail-row"><div className="detail-k">Format</div><div className="detail-v">{drawerAsset.format}</div></div>
-              <div className="detail-row"><div className="detail-k">Size</div><div className="detail-v">{drawerAsset.size}</div></div>
-              <div className="detail-row"><div className="detail-k">SHA-256 Hash</div><div className="detail-v mono">{formatHash(drawerAsset.hash)}</div></div>
+              <div className="detail-row"><div className="detail-k">Size</div><div className="detail-v">{formatSize(drawerAsset.size)}</div></div>
+              <div className="detail-row"><div className="detail-k">Description</div><div className="detail-v">{drawerAsset.description}</div></div>
+              <div className="detail-row"><div className="detail-k">SHA-256 Hash</div><div className="detail-v mono" style={{ overflowWrap: 'anywhere' }}>{drawerAsset.hash || 'Not available'}</div></div>
             </div>
             <div className="drawer-foot">
               <button

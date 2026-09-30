@@ -35,9 +35,17 @@ Request:
   "name": "Radar Blueprint v3",
   "classification": "Confidential",
   "ownerDID": "did:ethr:0xabc...",
-  "metadataHash": "hash-blueprint-v3"
+  "metadataHash": "<SHA-256 hash>",
+  "organization": "BEL",
+  "format": "application/pdf",
+  "size": 1048576,
+  "description": "Radar blueprint revision 3"
 }
 ```
+`metadataHash` may also be sent as `sha256`. `format`/`size` may also be sent
+as `fileFormat`/`fileSize`; size is a non-negative integer in bytes. Descriptive
+fields are optional. Metadata-bearing requests require the upgraded chaincode;
+original requests continue to use `MintAsset`.
 Response:
 ```json
 { "success": true }
@@ -51,9 +59,15 @@ Response:
   "name": "Radar Blueprint v3",
   "classification": "Confidential",
   "ownerDID": "did:ethr:0xabc...",
-  "metadataHash": "hash-blueprint-v3"
+  "metadataHash": "<SHA-256 hash>",
+  "organization": "BEL",
+  "format": "application/pdf",
+  "size": 1048576,
+  "description": "Radar blueprint revision 3"
 }
 ```
+Older assets do not have optional metadata until it is backfilled from a
+trusted source.
 
 ## POST /assets/:id/transfer
 Request:
@@ -67,6 +81,40 @@ Response:
 
 ## GET /assets
 Response: array of assets (same shape as `GET /assets/:id`).
+
+## PATCH /assets/:id/metadata
+Adds supplied metadata to an existing asset without changing its owner or
+classification. Supply at least one field:
+
+```json
+{
+  "organization": "BEL",
+  "format": "application/pdf",
+  "size": 1048576,
+  "description": "Radar blueprint revision 3",
+  "metadataHash": "<SHA-256 hash>"
+}
+```
+The API accepts `sha256`, `fileFormat`, and `fileSize` aliases. Values must
+come from a trusted source; the API does not invent metadata.
+
+## Asset chaincode upgrade
+From the existing `fabric-samples/test-network` checkout, use the project's
+CCAAS deployment script on the existing channel:
+
+```sh
+./network.sh deployCCAAS \
+  -ccn asset \
+  -ccp ~/Chain/Chain/chaincode/asset \
+  -c mychannel \
+  -ccv <new-version> \
+  -ccs <current-committed-sequence-plus-one>
+```
+
+Inspect the committed definition to choose the sequence. Do not stop/reset the
+network, remove peer volumes, recreate the channel, or clear ledger state.
+Backfill legacy metadata only from a trusted source and verify it with
+`GET /assets/:id`.
 
 ## POST /access/request
 **Risk evaluation only. No ledger transaction is created and no `txHash` is returned.**

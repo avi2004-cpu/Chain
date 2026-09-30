@@ -20,6 +20,18 @@ type Asset struct {
 	Classification string `json:"classification"`
 	OwnerDID       string `json:"ownerDID"`
 	MetadataHash   string `json:"metadataHash"`
+	Organization   string `json:"organization,omitempty"`
+	Format         string `json:"format,omitempty"`
+	Size           *int64 `json:"size,omitempty"`
+	Description    string `json:"description,omitempty"`
+}
+
+type AssetMetadata struct {
+	Organization string `json:"organization,omitempty"`
+	Format       string `json:"format,omitempty"`
+	Size         *int64 `json:"size,omitempty"`
+	Description  string `json:"description,omitempty"`
+	MetadataHash string `json:"metadataHash,omitempty"`
 }
 
 var validClassifications = map[string]bool{
@@ -30,10 +42,25 @@ var validClassifications = map[string]bool{
 }
 
 func (c *AssetContract) MintAsset(ctx contractapi.TransactionContextInterface, id string, name string, classification string, ownerDID string, metadataHash string) error {
+	return c.mintAsset(ctx, id, name, classification, ownerDID, metadataHash, AssetMetadata{})
+}
+
+func (c *AssetContract) MintAssetWithMetadata(ctx contractapi.TransactionContextInterface, id string, name string, classification string, ownerDID string, metadataHash string, metadataJSON string) error {
+	var metadata AssetMetadata
+	if err := json.Unmarshal([]byte(metadataJSON), &metadata); err != nil {
+		return fmt.Errorf("invalid asset metadata: %w", err)
+	}
+	return c.mintAsset(ctx, id, name, classification, ownerDID, metadataHash, metadata)
+}
+
+func (c *AssetContract) mintAsset(ctx contractapi.TransactionContextInterface, id string, name string, classification string, ownerDID string, metadataHash string, metadata AssetMetadata) error {
 	id = strings.TrimSpace(id)
 	name = strings.TrimSpace(name)
 	ownerDID = strings.TrimSpace(ownerDID)
 	metadataHash = strings.TrimSpace(metadataHash)
+	metadata.Organization = strings.TrimSpace(metadata.Organization)
+	metadata.Format = strings.TrimSpace(metadata.Format)
+	metadata.Description = strings.TrimSpace(metadata.Description)
 
 	if id == "" {
 		return fmt.Errorf("asset id cannot be empty")
@@ -47,6 +74,9 @@ func (c *AssetContract) MintAsset(ctx contractapi.TransactionContextInterface, i
 	if metadataHash == "" {
 		return fmt.Errorf("metadataHash cannot be empty")
 	}
+	if metadata.Size != nil && *metadata.Size < 0 {
+		return fmt.Errorf("asset size cannot be negative")
+	}
 	if !validClassifications[classification] {
 		return fmt.Errorf("invalid classification: %s (must be Public, Internal, Confidential, or Restricted)", classification)
 	}
@@ -59,7 +89,17 @@ func (c *AssetContract) MintAsset(ctx contractapi.TransactionContextInterface, i
 		return fmt.Errorf("asset %s already exists", id)
 	}
 
-	asset := Asset{ID: id, Name: name, Classification: classification, OwnerDID: ownerDID, MetadataHash: metadataHash}
+	asset := Asset{
+		ID:             id,
+		Name:           name,
+		Classification: classification,
+		OwnerDID:       ownerDID,
+		MetadataHash:   metadataHash,
+		Organization:   metadata.Organization,
+		Format:         metadata.Format,
+		Size:           metadata.Size,
+		Description:    metadata.Description,
+	}
 	assetJSON, err := json.Marshal(asset)
 	if err != nil {
 		return fmt.Errorf("failed to marshal asset: %v", err)
@@ -143,6 +183,63 @@ func (c *AssetContract) GetAllAssets(ctx contractapi.TransactionContextInterface
 		return "", fmt.Errorf("failed to marshal assets: %v", err)
 	}
 	return string(assetsJSON), nil
+}
+
+func (c *AssetContract) UpdateAssetMetadata(ctx contractapi.TransactionContextInterface, id string, metadataJSON string) error {
+	id = strings.TrimSpace(id)
+	if id == "" {
+		return fmt.Errorf("asset id cannot be empty")
+	}
+
+	var metadata AssetMetadata
+	if err := json.Unmarshal([]byte(metadataJSON), &metadata); err != nil {
+		return fmt.Errorf("invalid asset metadata: %w", err)
+	}
+	metadata.Organization = strings.TrimSpace(metadata.Organization)
+	metadata.Format = strings.TrimSpace(metadata.Format)
+	metadata.Description = strings.TrimSpace(metadata.Description)
+	metadata.MetadataHash = strings.TrimSpace(metadata.MetadataHash)
+	if metadata.Size != nil && *metadata.Size < 0 {
+		return fmt.Errorf("asset size cannot be negative")
+	}
+	if metadata.Organization == "" && metadata.Format == "" && metadata.Size == nil &&
+		metadata.Description == "" && metadata.MetadataHash == "" {
+		return fmt.Errorf("at least one metadata field must be provided")
+	}
+
+	assetJSON, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return fmt.Errorf("failed to read ledger state: %v", err)
+	}
+	if assetJSON == nil {
+		return fmt.Errorf("asset %s does not exist", id)
+	}
+
+	var asset Asset
+	if err := json.Unmarshal(assetJSON, &asset); err != nil {
+		return fmt.Errorf("failed to unmarshal asset: %v", err)
+	}
+	if metadata.Organization != "" {
+		asset.Organization = metadata.Organization
+	}
+	if metadata.Format != "" {
+		asset.Format = metadata.Format
+	}
+	if metadata.Size != nil {
+		asset.Size = metadata.Size
+	}
+	if metadata.Description != "" {
+		asset.Description = metadata.Description
+	}
+	if metadata.MetadataHash != "" {
+		asset.MetadataHash = metadata.MetadataHash
+	}
+
+	updatedJSON, err := json.Marshal(asset)
+	if err != nil {
+		return fmt.Errorf("failed to marshal updated asset: %v", err)
+	}
+	return ctx.GetStub().PutState(id, updatedJSON)
 }
 
 func main() {

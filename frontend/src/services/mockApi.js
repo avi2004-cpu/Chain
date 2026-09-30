@@ -75,18 +75,22 @@ export async function getIdentity(address) {
   };
 }
 
-// The asset chaincode stores { id, name, classification, ownerDID, metadataHash }.
-// The UI was built against richer mock assets (owner, hash, unit, size, format),
-// so map chain fields onto UI fields and give the off-chain-only ones a safe
-// placeholder instead of letting components crash on undefined.
+// Map ledger field names to the UI without inventing absent metadata.
 function toUiAsset(a) {
+  const organization = a.organization ?? a.unit;
+  const format = a.format ?? a.fileFormat;
+  const size = a.size ?? a.fileSize;
+  const metadataHash = a.metadataHash ?? a.sha256;
+
   return {
     ...a,
     owner: a.ownerDID ?? "—",
-    hash: typeof a.metadataHash === "string" ? a.metadataHash : "",
-    unit: a.unit || "—",
-    size: a.size || "—",
-    format: a.format || "—",
+    hash: typeof metadataHash === "string" ? metadataHash : "",
+    organization: typeof organization === "string" && organization.trim() ? organization : "—",
+    unit: typeof organization === "string" && organization.trim() ? organization : "—",
+    size: size ?? "—",
+    format: typeof format === "string" && format.trim() ? format : "—",
+    description: typeof a.description === "string" && a.description.trim() ? a.description : "—",
   };
 }
 
